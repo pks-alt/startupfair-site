@@ -16,8 +16,28 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Start preview and verify
+      - name: Start preview and verify Home links
         run: |
+          set -euo pipefail
           bash scripts/codespaces-start.sh
-          curl -fsS http://127.0.0.1:5173/ | grep -q "StartupFair"
-          echo "StartupFair responded successfully on port 5173"
+          check() {
+            path="$1"
+            expected="$2"
+            echo "Checking $path"
+            curl -fsS "http://127.0.0.1:5173$path" | grep -Fq "$expected"
+          }
+          check "/" "Build. Solve."
+          check "/challenges" "Explore Real-World Challenges"
+          check "/challenges/ai-clinician-matching" "AI Clinician Matching Challenge"
+          check "/for-talent" "Prove What You Can Build"
+          check "/for-organizations" "Solve Real Problems. Discover Proven Talent."
+          check "/partners" "Build the Future of Talent and Innovation Together."
+          check "/about" "From Startup Events to a Global Innovation Platform"
+          check "/contact" "Start With the Right Conversation."
+          check "/launch-challenge" "Launch an AI or Innovation Challenge"
+          check "/privacy" "Privacy"
+          check "/terms" "Terms"
+          check "/challenge-rules" "Challenge"
+          check "/cookies" "Cookie"
+          check "/" "Start a Conversation"
+          echo "All Home navigation targets responded with the expected page content."
