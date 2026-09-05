@@ -1,0 +1,12 @@
+{
+  "name": "StartupFair Preview",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "postCreateCommand": "npm run install:ci",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "label": "StartupFair Preview",
+      "onAutoForward": "openBrowser"
+    }
+  }
+}
