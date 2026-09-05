@@ -1,0 +1,71 @@
+name: Configure and verify StartupFair email routing
+on:
+  push:
+    branches: [preview-codespaces]
+    paths:
+      - '.github/workflows/email-routing-verify.yml'
+      - 'scripts/apply-email-routing.py'
+      - 'lib/email-routing.ts'
+      - 'components/email-routing-form.tsx'
+      - 'tests/email-routing.test.mjs'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: startupfair-email-routing-preview
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/preview-codespaces'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: preview-codespaces
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Apply targeted, hash-guarded form changes
+        run: python3 scripts/apply-email-routing.py
+      - name: Verify every recipient mapping
+        run: node --experimental-strip-types --test tests/email-routing.test.mjs
+      - name: Install existing dependencies
+        run: npm ci
+      - name: Verify rendered contact links and final form recipients
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/codespaces-start.sh
+          curl -fsS http://127.0.0.1:5173/contact -o /tmp/startupfair-contact.html
+          for address in hello challenges talent partners; do
+            grep -q "mailto:${address}@startupfair.org" /tmp/startupfair-contact.html
+          done
+          while read -r route address; do
+            curl -fsS "http://127.0.0.1:5173${route}" -o /tmp/startupfair-form.html
+            grep -q "data-email-recipient=\"${address}@startupfair.org\"" /tmp/startupfair-form.html
+            grep -q 'data-delivery-mode="preview-only"' /tmp/startupfair-form.html
+          done <<'ROUTES'
+          /contact hello
+          /apply/ai-clinician-matching/review challenges
+          /apply/enterprise-ai-agent/review challenges
+          /apply/publisher-campaign-intelligence/review challenges
+          /launch-challenge/review challenges
+          /talent-profile/review talent
+          /find-talent/review talent
+          /partner-inquiry/review partners
+          ROUTES
+          git diff --exit-code -- app/globals.css app/home-review.css app/inquiry-fix.css components/ui/dialog.tsx public
+      - name: Commit verified form integration to preview only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add components/startupfair-page.tsx
+          if ! git diff --cached --quiet; then
+            git config user.name "StartupFair Verification"
+            git config user.email "actions@users.noreply.github.com"
+            git commit -m "Assign approved department recipients to all preview forms"
+            git push origin HEAD:preview-codespaces
+          fi
+          echo "Email routing checks passed. Delivery is not enabled." >> "$GITHUB_STEP_SUMMARY"
