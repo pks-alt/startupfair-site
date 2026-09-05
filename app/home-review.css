@@ -1,0 +1,59 @@
+/* Home recovery review: preserve the established design; fix only spacing and inquiry form behavior. */
+
+/* Approved Start a Conversation popup fix. */
+.inquiry-form input:not([type="checkbox"]),
+.inquiry-form select,
+.inquiry-form textarea{
+  width:100%;
+  min-width:0;
+  border:1px solid #bac9d2;
+  background:#fff;
+  padding:12px 13px;
+  color:var(--ink);
+  outline:none;
+  box-sizing:border-box;
+}
+.inquiry-form input:not([type="checkbox"]):focus,
+.inquiry-form select:focus,
+.inquiry-form textarea:focus{
+  border-color:var(--blue-dark);
+  box-shadow:0 0 0 3px #42b5ef26;
+}
+.inquiry-form .inquiry-consent{
+  display:grid;
+  grid-template-columns:20px minmax(0,1fr);
+  align-items:start;
+  gap:10px;
+  font-weight:500;
+  line-height:1.45;
+}
+.inquiry-form .inquiry-consent input[type="checkbox"]{
+  width:18px;
+  height:18px;
+  margin:2px 0 0;
+  padding:0;
+  accent-color:var(--blue-dark);
+  box-shadow:none;
+  flex:none;
+}
+.inquiry-form .inquiry-consent input[type="checkbox"]:focus-visible{
+  outline:2px solid var(--blue-dark);
+  outline-offset:2px;
+}
+.inquiry-submit{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.inquiry-submit small{color:var(--muted);line-height:1.4;max-width:420px}
+
+/* Home-only spacing pass requested during final review. */
+@media(min-width:621px){
+  .home-page .hero{min-height:520px;padding-top:60px;padding-bottom:60px}
+  .home-page .section{padding-top:56px;padding-bottom:56px}
+  .home-page .section-head{margin-bottom:30px}
+  .home-page .path-grid>a{min-height:235px}
+  .home-page .path-grid h3{margin-top:40px}
+  .home-page .featured-challenge{padding:28px}
+  .home-page .process>div{padding-top:22px;padding-bottom:22px}
+  .home-page .history-band{padding-top:24px;padding-bottom:24px}
+  .home-page .partner-strip span{min-height:110px}
+  .home-page>.cta{padding-top:56px;padding-bottom:56px}
+  .home-inquiry{padding-top:40px;padding-bottom:40px}
+}
