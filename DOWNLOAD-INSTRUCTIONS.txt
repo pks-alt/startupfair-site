@@ -1,0 +1,22 @@
+STARTUPFAIR CLICK-THROUGH WEBSITE
+
+Requirements:
+- Node.js 20 or later
+- npm
+
+To run the website on your laptop:
+1. Extract this ZIP file.
+2. Open Terminal or Command Prompt inside the extracted folder.
+3. Run: npm install
+4. Run: npm run dev
+5. Open the local address shown in the terminal.
+
+To create a production build:
+Run: npm run build
+
+Main editable files:
+- components/startupfair-page.tsx — page structure and text
+- app/globals.css — design, fonts, colors and responsive layout
+- public/startupfair-logo.png — StartupFair logo
+
+This package contains the complete click-through source code.
