@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { ReliableNavigation } from "@/components/reliable-navigation";
 import "./globals.css";
+import "./home-review.css";
 
 export const metadata: Metadata = {
   title: "StartupFair — AI Talent & Open Innovation",
@@ -20,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <ReliableNavigation />
+        {children}
+      </body>
     </html>
   );
 }
