@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ReliableNavigation } from "@/components/reliable-navigation";
 import "./globals.css";
 import "./home-review.css";
+import "./inquiry-fix.css";
 
 export const metadata: Metadata = {
   title: "StartupFair — AI Talent & Open Innovation",
