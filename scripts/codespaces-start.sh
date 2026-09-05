@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 set -u
 
-pkill -f "vite.*5173" >/dev/null 2>&1 || true
-nohup npx vite --host 0.0.0.0 --port 5173 >/tmp/startupfair-vite.log 2>&1 &
+# Keep only one StartupFair Vite preview alive in Codespaces.
+pkill -f "node.*vite" >/dev/null 2>&1 || true
+pkill -f "npm.*vite" >/dev/null 2>&1 || true
+sleep 1
+
+nohup npx vite --host 0.0.0.0 --port 5173 --strictPort >/tmp/startupfair-vite.log 2>&1 &
 
 for i in $(seq 1 30); do
   if curl -fsS http://127.0.0.1:5173/ >/dev/null 2>&1; then
