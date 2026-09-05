@@ -1,7 +1,7 @@
 {
   "name": "StartupFair Preview",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
-  "postCreateCommand": "npm ci",
+  "postCreateCommand": "npm ci && bash scripts/codespaces-start.sh",
   "postStartCommand": "bash scripts/codespaces-start.sh",
   "forwardPorts": [5173],
   "portsAttributes": {
