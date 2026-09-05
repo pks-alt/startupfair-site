@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { EmailRoutingForm, EmailRecipientNotice } from "@/components/email-routing-form";
+import { INQUIRY_OPTIONS } from "@/lib/email-routing";
 import { useState, type ReactNode } from "react";
 import {
   Dialog,
@@ -308,7 +310,7 @@ function HomeInquiryPanel() {
             <DialogTitle className="inquiry-dialog-title">How can we help?</DialogTitle>
             <DialogDescription className="inquiry-dialog-description">Share a few details and we’ll direct your inquiry to the right team.</DialogDescription>
           </DialogHeader>
-          <form className="inquiry-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/contact/confirmation"); }}>
+          <EmailRoutingForm category="general" routeByInterest showEmailContact className="inquiry-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/contact/confirmation"); }}>
             <label>Full name<input required name="name" autoComplete="name" /></label>
             <label>Work email<input required type="email" name="email" autoComplete="email" /></label>
             <label>Organization <small>(optional)</small><input name="organization" autoComplete="organization" /></label>
@@ -316,17 +318,13 @@ function HomeInquiryPanel() {
               I’m interested in
               <select required name="interest" defaultValue="">
                 <option value="" disabled>Select one</option>
-                <option>Launching a Challenge</option>
-                <option>Joining as Talent</option>
-                <option>Partnership</option>
-                <option>Investment or Venture Opportunity</option>
-                <option>General Inquiry</option>
+                {INQUIRY_OPTIONS.map(({ label }) => <option key={label} value={label}>{label}</option>)}
               </select>
             </label>
             <label className="wide">Short message<textarea required name="message" rows={4} maxLength={1000} /></label>
             <label className="wide inquiry-consent"><input required type="checkbox" name="contactPermission" />I authorize StartupFair to use this information to review and respond to my inquiry.</label>
             <div className="wide inquiry-submit"><button className="button primary" type="submit">Submit Inquiry</button><small>During this website preview, information is not transmitted or stored.</small></div>
-          </form>
+          </EmailRoutingForm>
         </DialogContent>
       </Dialog>
     </section>
@@ -1254,7 +1252,7 @@ function ApplicationTypePage({ basePath, interestOnly = false }: { basePath: str
         <p>Choose the option that best represents your {interestOnly ? "registration" : "application"}.</p>
       </section>
       <Section eyebrow="Participant type" title="Individual or Team">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign(`${basePath}/contact`); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign(`${basePath}/contact`); }}>
           <label className="wide check">
             <input
               required
@@ -1299,7 +1297,7 @@ function ApplicationTypePage({ basePath, interestOnly = false }: { basePath: str
             The application type may be changed before final submission. Team
             membership changes after acceptance may require StartupFair approval.
           </p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1314,7 +1312,7 @@ function ApplicationContactPage({ basePath, challengeName, interestOnly = false 
         <p>For team applications, this section should be completed by the primary contact.</p>
       </section>
       <Section eyebrow="Applicant details" title="Contact Information">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign(`${basePath}/background`); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign(`${basePath}/background`); }}>
           <label>First name<input required name="firstName" autoComplete="given-name" /></label>
           <label>Last name<input required name="lastName" autoComplete="family-name" /></label>
           <label>Preferred name <small>(optional)</small><input name="preferredName" /></label>
@@ -1336,7 +1334,7 @@ function ApplicationContactPage({ basePath, challengeName, interestOnly = false 
             verification, safety, compliance, and relevant opportunity
             discussions. It will not be displayed publicly without permission.
           </p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1364,7 +1362,7 @@ function ClinicianApplicationBackgroundPage() {
         <p>For team applications, describe the primary contact’s background here. Other team members’ capabilities can be included in the team information.</p>
       </section>
       <Section eyebrow="Experience and skills" title="Background and Capabilities">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/challenge-experience"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/challenge-experience"); }}>
           <label>Current professional status<select required name="professionalStatus" defaultValue=""><option value="" disabled>Select one</option><option>Employed</option><option>Independent professional or consultant</option><option>Founder or business owner</option><option>Student</option><option>Recent graduate</option><option>Career changer</option><option>Not currently employed</option><option>Other</option></select></label>
           <label>Current or most recent job title<input required name="jobTitle" /></label>
           <label>Organization, company, or educational institution <small>(optional)</small><input name="organization" /></label>
@@ -1381,7 +1379,7 @@ function ClinicianApplicationBackgroundPage() {
             <Link className="button" href="/apply/ai-clinician-matching/contact">Back to Contact Information</Link>
           </div>
           <p className="wide submission-note">Applicants should provide accurate information. StartupFair may request reasonable verification of material qualifications or experience during the review process.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1412,7 +1410,7 @@ function EnterpriseApplicationBackgroundPage() {
         <p>For team applications, describe the primary contact’s background here. Other team members’ capabilities can be included in the team information.</p>
       </section>
       <Section eyebrow="Experience and skills" title="Background and Capabilities">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/challenge-experience"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/challenge-experience"); }}>
           <label>Current professional status<select required name="professionalStatus" defaultValue=""><option value="" disabled>Select one</option><option>Employed</option><option>Independent professional or consultant</option><option>Founder or business owner</option><option>Student</option><option>Recent graduate</option><option>Career changer</option><option>Not currently employed</option><option>Other</option></select></label>
           <label>Current or most recent job title<input required name="jobTitle" /></label>
           <label>Organization, company, or educational institution <small>(optional)</small><input name="organization" /></label>
@@ -1429,7 +1427,7 @@ function EnterpriseApplicationBackgroundPage() {
             <Link className="button" href="/apply/enterprise-ai-agent/contact">Back to Contact Information</Link>
           </div>
           <p className="wide submission-note">Applicants should provide accurate information. StartupFair may request reasonable verification of material qualifications or experience during the review process.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1463,7 +1461,7 @@ function PublisherApplicationBackgroundPage() {
         <p>For team applications, describe the primary contact’s background here. Other team members’ capabilities can be included in the team information.</p>
       </section>
       <Section eyebrow="Experience and skills" title="Background and Capabilities">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/challenge-experience"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/challenge-experience"); }}>
           <label>Current professional status<select required name="professionalStatus" defaultValue=""><option value="" disabled>Select one</option><option>Employed</option><option>Independent professional or consultant</option><option>Founder or business owner</option><option>Student</option><option>Recent graduate</option><option>Career changer</option><option>Not currently employed</option><option>Other</option></select></label>
           <label>Current or most recent job title<input required name="jobTitle" /></label>
           <label>Organization, company, or educational institution <small>(optional)</small><input name="organization" /></label>
@@ -1480,7 +1478,7 @@ function PublisherApplicationBackgroundPage() {
             <Link className="button" href="/apply/publisher-campaign-intelligence/contact">Back to Contact Information</Link>
           </div>
           <p className="wide submission-note">Applicants should provide accurate information. StartupFair may request reasonable verification of material qualifications or experience during the review process.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1512,7 +1510,7 @@ function PublisherApplicationExperiencePage() {
         <p>Direct advertising-industry experience is helpful but not required. Applicants may demonstrate relevant skills through AI, data, software, publishing, media, analytics, product, marketing, or other transferable work.</p>
       </section>
       <Section eyebrow="Challenge fit" title="Challenge-Specific Experience">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/motivation"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/motivation"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Relevant experience areas <small>(select all that apply)</small></legend>
             {experienceAreas.map((item) => <label className="check" key={item}><input type="checkbox" name="experienceAreas" value={item} />{item}</label>)}
@@ -1532,7 +1530,7 @@ function PublisherApplicationExperiencePage() {
             <Link className="button" href="/apply/publisher-campaign-intelligence/background">Back to Background and Capabilities</Link>
           </div>
           <p className="wide submission-note">StartupFair evaluates applicants based on their overall capabilities and potential contribution. Lack of direct advertising-industry experience does not automatically disqualify an applicant.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1547,7 +1545,7 @@ function PublisherApplicationApproachPage() {
         <p>A complete technical design is not required at this stage. We want to understand the problem you would prioritize, your reasoning, how you would measure value, and how you would use data responsibly.</p>
       </section>
       <Section eyebrow="Your perspective" title="Motivation and Proposed Approach">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/links"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/links"); }}>
           <label className="wide">Why do you want to participate? <small>(maximum 1,000 characters)</small><textarea required maxLength={1000} name="motivation" rows={5} placeholder="Explain why this challenge is relevant to your interests, experience, or goals." /></label>
           <label className="wide">Which publisher-to-campaign matching problem would you prioritize? <small>(maximum 1,500 characters)</small><textarea required maxLength={1500} name="priorityProblem" rows={6} placeholder="Describe the problem, current limitations, and the outcome you would aim to improve." /></label>
           <label className="wide">Who are the intended users, and what decisions should the solution improve? <small>(maximum 1,000 characters)</small><textarea required maxLength={1000} name="usersAndDecisions" rows={5} placeholder="Examples may include publishers, advertisers, campaign managers, affiliate teams, media buyers, or analysts." /></label>
@@ -1562,7 +1560,7 @@ function PublisherApplicationApproachPage() {
             <Link className="button" href="/apply/publisher-campaign-intelligence/challenge-experience">Back to Challenge-Specific Experience</Link>
           </div>
           <p className="wide submission-note">Do not submit confidential campaign data, unauthorized publisher information, personally identifiable information, consumer-level tracking data, proprietary information you cannot share, or access credentials. Proposed approaches may change during the challenge.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1577,7 +1575,7 @@ function PublisherApplicationLinksPage() {
         <p>Provide links that help reviewers understand your experience and capabilities. All fields are optional.</p>
       </section>
       <Section eyebrow="Evidence of capability" title="Professional Links and Work Samples">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/acknowledgments"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/acknowledgments"); }}>
           <label>LinkedIn profile<input type="url" name="linkedin" placeholder="https://" /></label>
           <label>GitHub or code repository<input type="url" name="codeRepository" placeholder="https://" /></label>
           <label>Personal portfolio<input type="url" name="portfolio" placeholder="https://" /></label>
@@ -1592,7 +1590,7 @@ function PublisherApplicationLinksPage() {
             <Link className="button" href="/apply/publisher-campaign-intelligence/motivation">Back to Motivation and Proposed Approach</Link>
           </div>
           <p className="wide submission-note">Applicants must have permission to share every submitted link. Work samples must not expose client-confidential data, personal information, campaign credentials, or proprietary information. Not having a portfolio, GitHub profile, or published work does not automatically disqualify an applicant.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1620,7 +1618,7 @@ function PublisherApplicationAcknowledgmentsPage() {
         <p>Applicants must confirm the following before continuing to final review.</p>
       </section>
       <Section eyebrow="Required confirmations" title="Eligibility and Acknowledgments">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/review"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/review"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Required confirmations</legend>
             {confirmations.map((item) => <label className="check wide" key={item}><input required type="checkbox" name="confirmations" value={item} />{item}</label>)}
@@ -1638,7 +1636,7 @@ function PublisherApplicationAcknowledgmentsPage() {
             <Link className="button" href="/apply/publisher-campaign-intelligence/links">Back to Professional Links</Link>
           </div>
           <p className="wide submission-note">These application acknowledgments should receive final legal review before the website begins accepting real applications.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1670,7 +1668,7 @@ function EnterpriseApplicationExperiencePage() {
         <p>Direct AI-agent experience is helpful but not required. Applicants may demonstrate relevant skills through software, automation, data, product, security, operations, or industry projects.</p>
       </section>
       <Section eyebrow="Challenge fit" title="Challenge-Specific Experience">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/motivation"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/motivation"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Relevant experience areas <small>(select all that apply)</small></legend>
             {experienceAreas.map((item) => <label className="check" key={item}><input type="checkbox" name="experienceAreas" value={item} />{item}</label>)}
@@ -1689,7 +1687,7 @@ function EnterpriseApplicationExperiencePage() {
             <Link className="button" href="/apply/enterprise-ai-agent/background">Back to Background and Capabilities</Link>
           </div>
           <p className="wide submission-note">StartupFair evaluates applicants based on their overall capabilities and potential contribution. Lack of prior AI-agent deployment experience does not automatically disqualify an applicant.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1704,7 +1702,7 @@ function EnterpriseApplicationApproachPage() {
         <p>A complete architecture is not required at this stage. We want to understand the workflow you would improve, your reasoning, how you would manage risk, and the contribution you could make.</p>
       </section>
       <Section eyebrow="Your perspective" title="Motivation and Proposed Approach">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/links"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/links"); }}>
           <label className="wide">Why do you want to participate? <small>(maximum 1,000 characters)</small><textarea required maxLength={1000} name="motivation" rows={5} placeholder="Explain why this challenge is relevant to your interests, experience, or goals." /></label>
           <label className="wide">Which enterprise workflow or problem would you improve? <small>(maximum 1,500 characters)</small><textarea required maxLength={1500} name="workflowProblem" rows={6} placeholder="Describe the intended users, the current process and pain points, and the outcome you would aim to improve." /></label>
           <label className="wide">Preliminary AI-agent approach <small>(maximum 2,500 characters)</small><textarea required maxLength={2500} name="preliminaryApproach" rows={9} placeholder="Outline the objective, inputs or data sources, models, tools or APIs, memory or orchestration, human approvals, and expected outputs." /></label>
@@ -1717,7 +1715,7 @@ function EnterpriseApplicationApproachPage() {
             <Link className="button" href="/apply/enterprise-ai-agent/challenge-experience">Back to Challenge-Specific Experience</Link>
           </div>
           <p className="wide submission-note">Proposed approaches may change during the challenge. Do not include confidential or proprietary information, personal or sensitive data, or access credentials in this application.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1732,7 +1730,7 @@ function EnterpriseApplicationLinksPage() {
         <p>Provide links that help reviewers understand your experience and capabilities. All fields are optional.</p>
       </section>
       <Section eyebrow="Evidence of capability" title="Professional Links and Work Samples">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/acknowledgments"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/acknowledgments"); }}>
           <label>LinkedIn profile<input type="url" name="linkedin" placeholder="https://" /></label>
           <label>GitHub or code repository<input type="url" name="codeRepository" placeholder="https://" /></label>
           <label>Personal portfolio<input type="url" name="portfolio" placeholder="https://" /></label>
@@ -1746,7 +1744,7 @@ function EnterpriseApplicationLinksPage() {
             <Link className="button" href="/apply/enterprise-ai-agent/motivation">Back to Motivation and Proposed Approach</Link>
           </div>
           <p className="wide submission-note">Applicants are responsible for ensuring they have permission to share all submitted links and materials. Not having a portfolio, GitHub profile, or published work does not automatically disqualify an applicant.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1773,7 +1771,7 @@ function EnterpriseApplicationAcknowledgmentsPage() {
         <p>Applicants must confirm the following before continuing to final review.</p>
       </section>
       <Section eyebrow="Required confirmations" title="Eligibility and Acknowledgments">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/review"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/review"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Required confirmations</legend>
             {confirmations.map((item) => <label className="check wide" key={item}><input required type="checkbox" name="confirmations" value={item} />{item}</label>)}
@@ -1791,7 +1789,7 @@ function EnterpriseApplicationAcknowledgmentsPage() {
             <Link className="button" href="/apply/enterprise-ai-agent/links">Back to Professional Links</Link>
           </div>
           <p className="wide submission-note">These application acknowledgments should receive final legal review before the website begins accepting real applications.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1820,7 +1818,7 @@ function ClinicianApplicationExperiencePage() {
         <p>Prior healthcare experience is helpful but not required. Applicants may bring technical, product, workforce, operational, design, or domain expertise.</p>
       </section>
       <Section eyebrow="Challenge fit" title="Challenge-Specific Experience">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/motivation"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/motivation"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Relevant experience areas <small>(select all that apply)</small></legend>
             {experienceAreas.map((item) => <label className="check" key={item}><input type="checkbox" name="experienceAreas" value={item} />{item}</label>)}
@@ -1839,7 +1837,7 @@ function ClinicianApplicationExperiencePage() {
             <Link className="button" href="/apply/ai-clinician-matching/background">Back to Background and Capabilities</Link>
           </div>
           <p className="wide submission-note">StartupFair evaluates applicants based on their overall capabilities and potential contribution. Lack of direct healthcare experience does not automatically disqualify an applicant.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1854,7 +1852,7 @@ function ClinicianApplicationApproachPage() {
         <p>A complete technical design is not required at the application stage. We want to understand your thinking, motivation, and potential contribution.</p>
       </section>
       <Section eyebrow="Your perspective" title="Motivation and Proposed Approach">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/links"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/links"); }}>
           <label className="wide">Why do you want to participate? <small>(maximum 1,000 characters)</small><textarea required maxLength={1000} name="motivation" rows={5} placeholder="Explain why this challenge is relevant to your interests, experience, or goals." /></label>
           <label className="wide">Which part of the problem interests you most? <small>(maximum 1,000 characters)</small><textarea required maxLength={1000} name="problemInterest" rows={5} placeholder="Examples include qualification matching, credential interpretation, preferences, geographic eligibility, explainability, fairness, recruiter productivity, or user experience." /></label>
           <label className="wide">Preliminary approach <small>(maximum 2,500 characters)</small><textarea required maxLength={2500} name="preliminaryApproach" rows={9} placeholder="Describe the intended users, major workflow, relevant data inputs, AI methods, and human-review points." /></label>
@@ -1866,7 +1864,7 @@ function ClinicianApplicationApproachPage() {
             <Link className="button" href="/apply/ai-clinician-matching/challenge-experience">Back to Relevant Experience</Link>
           </div>
           <p className="wide submission-note">Proposed approaches may change during the challenge. Applicants must not include confidential, proprietary, personal, or protected health information in this application.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1881,7 +1879,7 @@ function ClinicianApplicationLinksPage() {
         <p>Provide links that help reviewers understand your experience and capabilities. All fields are optional.</p>
       </section>
       <Section eyebrow="Evidence of capability" title="Professional Links and Work Samples">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/acknowledgments"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/acknowledgments"); }}>
           <label>LinkedIn profile<input type="url" name="linkedin" placeholder="https://" /></label>
           <label>GitHub or code repository<input type="url" name="codeRepository" placeholder="https://" /></label>
           <label>Personal portfolio<input type="url" name="portfolio" placeholder="https://" /></label>
@@ -1895,7 +1893,7 @@ function ClinicianApplicationLinksPage() {
             <Link className="button" href="/apply/ai-clinician-matching/motivation">Back to Motivation and Proposed Approach</Link>
           </div>
           <p className="wide submission-note">Applicants are responsible for ensuring they have permission to share all submitted links and materials. Reviewers may access only the materials provided or publicly available through those links. Not having a portfolio, GitHub profile, or published work does not automatically disqualify an applicant.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1920,7 +1918,7 @@ function ClinicianApplicationAcknowledgmentsPage() {
         <p>Applicants must confirm the following before continuing to final review.</p>
       </section>
       <Section eyebrow="Required confirmations" title="Eligibility and Acknowledgments">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/review"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/review"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Required confirmations</legend>
             {confirmations.map((item) => <label className="check wide" key={item}><input required type="checkbox" name="confirmations" value={item} />{item}</label>)}
@@ -1938,7 +1936,7 @@ function ClinicianApplicationAcknowledgmentsPage() {
             <Link className="button" href="/apply/ai-clinician-matching/links">Back to Professional Links</Link>
           </div>
           <p className="wide submission-note">These application acknowledgments should receive final legal review before the website begins accepting real applications.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -1973,7 +1971,7 @@ function ClinicianApplicationReviewPage() {
         </div>
       </Section>
       <Section eyebrow="Ready to submit" title="Final Confirmation" soft>
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/confirmation"); }}>
+        <EmailRoutingForm category="challenges" showEmailContact className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/ai-clinician-matching/confirmation"); }}>
           <label className="wide check"><input required type="checkbox" name="reviewed" />I have reviewed my application and confirm that it is ready to be submitted.</label>
           <label className="wide check"><input required type="checkbox" name="followUp" />I understand that I may be contacted for clarification, verification, or an interview.</label>
           <label className="wide check"><input required type="checkbox" name="noGuarantee" />I understand that submitting an application does not guarantee acceptance or any other outcome.</label>
@@ -1982,7 +1980,7 @@ function ClinicianApplicationReviewPage() {
             <Link className="button" href="/apply/ai-clinician-matching/acknowledgments">Back to Eligibility and Acknowledgments</Link>
           </div>
           <p className="wide submission-note">After submission, the applicant will see a confirmation screen. When production email delivery is enabled, StartupFair should also send an application reference number and confirmation email.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2017,7 +2015,7 @@ function EnterpriseApplicationReviewPage() {
         </div>
       </Section>
       <Section eyebrow="Ready to submit" title="Final Confirmation" soft>
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/confirmation"); }}>
+        <EmailRoutingForm category="challenges" showEmailContact className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/enterprise-ai-agent/confirmation"); }}>
           <label className="wide check"><input required type="checkbox" name="reviewed" />I have reviewed my application and confirm that it is accurate and ready to be submitted.</label>
           <label className="wide check"><input required type="checkbox" name="followUp" />I understand that I may be contacted for clarification, verification, or an interview.</label>
           <label className="wide check"><input required type="checkbox" name="noGuarantee" />I understand that submitting an application does not guarantee acceptance or any other outcome.</label>
@@ -2026,7 +2024,7 @@ function EnterpriseApplicationReviewPage() {
             <Link className="button" href="/apply/enterprise-ai-agent/acknowledgments">Back to Eligibility and Acknowledgments</Link>
           </div>
           <p className="wide submission-note">After submission, the applicant will see a confirmation screen. When production email delivery is enabled, StartupFair should also send an application reference number and confirmation email.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2095,7 +2093,7 @@ function PublisherApplicationReviewPage() {
         </div>
       </Section>
       <Section eyebrow="Ready to submit" title="Final Confirmation" soft>
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/confirmation"); }}>
+        <EmailRoutingForm category="challenges" showEmailContact className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/apply/publisher-campaign-intelligence/confirmation"); }}>
           <label className="wide check"><input required type="checkbox" name="reviewed" />I have reviewed my application and confirm that it is accurate and ready to be submitted.</label>
           <label className="wide check"><input required type="checkbox" name="followUp" />I understand that I may be contacted for clarification, verification, or an interview.</label>
           <label className="wide check"><input required type="checkbox" name="noGuarantee" />I understand that submitting an application does not guarantee acceptance or any other outcome.</label>
@@ -2104,7 +2102,7 @@ function PublisherApplicationReviewPage() {
             <Link className="button" href="/apply/publisher-campaign-intelligence/acknowledgments">Back to Eligibility and Acknowledgments</Link>
           </div>
           <p className="wide submission-note">After submission, the applicant will see a confirmation screen. When production email delivery is enabled, StartupFair should also send an application reference number and confirmation email.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2238,7 +2236,7 @@ function TalentProfileContactPage() {
         <p>Tell us how to identify and contact you. Your email address, phone number, and precise location will not appear publicly, even if you later choose a public profile.</p>
       </section>
       <Section eyebrow="Basic information" title="Your Contact Details">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/background"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/background"); }}>
           <label>Full legal name<input required autoComplete="name" name="legalName" /></label>
           <label>Preferred or display name<input required name="displayName" /></label>
           <label>Email address<input required type="email" autoComplete="email" name="email" /></label>
@@ -2262,7 +2260,7 @@ function TalentProfileContactPage() {
             <Link className="button" href="/talent-profile">Back to Profile Introduction</Link>
           </div>
           <p className="wide submission-note"><strong>Privacy:</strong> Email, phone number, and precise location remain non-public under every profile-visibility setting.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2291,7 +2289,7 @@ function TalentProfileBackgroundPage() {
         <p>Share enough context for StartupFair to understand your experience, career stage, and the types of problems where you can contribute.</p>
       </section>
       <Section eyebrow="Your experience" title="Background and Professional Summary">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/skills"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/skills"); }}>
           <label>Current professional status<select required name="professionalStatus" defaultValue=""><option value="" disabled>Select one</option><option>Employed</option><option>Independent professional or consultant</option><option>Founder or business owner</option><option>Student</option><option>Recent graduate</option><option>Career changer</option><option>Not currently employed</option><option>Other</option></select></label>
           <label>Professional headline<input required name="professionalHeadline" placeholder="Example: AI engineer building secure enterprise applications" /></label>
           <label>Current or most recent job title<input required name="jobTitle" /></label>
@@ -2310,7 +2308,7 @@ function TalentProfileBackgroundPage() {
             <Link className="button" href="/talent-profile/contact">Back to Contact and Location</Link>
           </div>
           <p className="wide submission-note">Focus on accurate, relevant information. StartupFair may request reasonable verification of material qualifications or experience for specific challenges or opportunities.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2344,7 +2342,7 @@ function TalentProfileSkillsPage() {
         <p>Describe the capabilities you can apply to practical challenges, projects, and opportunities.</p>
       </section>
       <Section eyebrow="Your capabilities" title="Skills, Tools and Evidence">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/interests"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/interests"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Primary skill categories <small>(select all that apply)</small></legend>
             {skillCategories.map((item) => <label className="check" key={item}><input type="checkbox" name="skillCategories" value={item} />{item}</label>)}
@@ -2361,7 +2359,7 @@ function TalentProfileSkillsPage() {
             <Link className="button" href="/talent-profile/background">Back to Professional Background</Link>
           </div>
           <p className="wide submission-note">Skills are self-reported until verified through challenge results, supporting evidence, professional credentials, or another StartupFair-approved verification process.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2399,7 +2397,7 @@ function TalentProfileInterestsPage() {
         <p>Choose the types of challenges, working arrangements, and professional opportunities most relevant to you.</p>
       </section>
       <Section eyebrow="Your preferences" title="What Are You Looking For?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/work-samples"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/work-samples"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Challenge types <small>(select all that apply)</small></legend>
             {challengeTypes.map((item) => <label className="check" key={item}><input type="checkbox" name="challengeTypes" value={item} />{item}</label>)}
@@ -2427,7 +2425,7 @@ function TalentProfileInterestsPage() {
             <Link className="button" href="/talent-profile/skills">Back to Skills and Expertise</Link>
           </div>
           <p className="wide submission-note">These preferences help StartupFair make more relevant recommendations. They do not guarantee challenge selection, introductions, employment, projects, partnerships, or any other outcome.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2442,7 +2440,7 @@ function TalentProfileWorkSamplesPage() {
         <p>Share materials that help reviewers understand what you can build, analyze, design, lead, improve, or deliver. Every field on this page is optional.</p>
       </section>
       <Section eyebrow="Evidence of capability" title="Professional Links">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/privacy"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/privacy"); }}>
           <label>GitHub or code repository<input type="url" name="codeRepository" placeholder="https://" /></label>
           <label>Portfolio<input type="url" name="portfolio" placeholder="https://" /></label>
           <label>Product, application, or prototype<input type="url" name="product" placeholder="https://" /></label>
@@ -2466,7 +2464,7 @@ function TalentProfileWorkSamplesPage() {
             <Link className="button" href="/talent-profile/interests">Back to Challenge and Opportunity Interests</Link>
           </div>
           <p className="wide submission-note">Applicants without public work samples are not disqualified. You must have permission to share every submitted material. Links must not expose confidential information, protected data, personal information, access credentials, or unauthorized intellectual property. Work samples will not become public unless you later select an appropriate visibility setting.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2500,7 +2498,7 @@ function TalentProfilePrivacyPage() {
         <p>Choose how StartupFair may use your profile. Your contact information and precise location remain private under every option.</p>
       </section>
       <Section eyebrow="Your choice" title="Choose One Visibility Level">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/review"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/review"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Profile visibility</legend>
             {visibilityOptions.map(([value, title, copy]) => (
@@ -2528,7 +2526,7 @@ function TalentProfilePrivacyPage() {
             <Link className="button" href="/talent-profile/work-samples">Back to Work Samples</Link>
           </div>
           <p className="wide submission-note">StartupFair publicly announces only challenge winners and finalists. Other challenge participation and results remain private unless the participant independently chooses to share them.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2562,7 +2560,7 @@ function TalentProfileReviewPage() {
         </div>
       </Section>
       <Section eyebrow="Ready to create" title="Final Confirmation" soft>
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/confirmation"); }}>
+        <EmailRoutingForm category="talent" showEmailContact className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/talent-profile/confirmation"); }}>
           <label className="wide check"><input required type="checkbox" name="accurate" />I have reviewed my profile and confirm that the information is accurate and complete to the best of my knowledge.</label>
           <label className="wide check"><input required type="checkbox" name="permission" />I have permission to submit and share all information, links, and materials included in my profile.</label>
           <label className="wide check"><input required type="checkbox" name="visibility" />I understand and approve the profile-visibility settings I selected.</label>
@@ -2572,7 +2570,7 @@ function TalentProfileReviewPage() {
             <Link className="button" href="/talent-profile/privacy">Back to Privacy and Visibility</Link>
           </div>
           <p className="wide submission-note">The production platform should show a final visibility summary and send a confirmation email after the profile is created.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2838,7 +2836,7 @@ function ChallengeProposalContactPage() {
         <p>Identify the organization and the person authorized to discuss a potential challenge with StartupFair.</p>
       </section>
       <Section eyebrow="Organization proposal" title="Primary Contact and Organization">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/problem"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/problem"); }}>
           <label>Full name<input required autoComplete="name" name="contactName" /></label>
           <label>Job title<input required name="jobTitle" /></label>
           <label>Business email<input required type="email" autoComplete="email" name="businessEmail" /></label>
@@ -2862,7 +2860,7 @@ function ChallengeProposalContactPage() {
             <Link className="button" href="/launch-challenge">Back to Introduction</Link>
           </div>
           <p className="wide submission-note">Contact information and proposal details remain private and available only to authorized StartupFair personnel unless separate sharing permission is provided.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2877,7 +2875,7 @@ function ChallengeProposalProblemPage() {
         <p>Define the current problem, who it affects, why it matters, and what a successful challenge should help accomplish.</p>
       </section>
       <Section eyebrow="Problem definition" title="What Should the Challenge Solve?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/talent"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/talent"); }}>
           <label className="wide">Working challenge title<input required name="challengeTitle" /></label>
           <label>Primary challenge model<select required name="challengeModel" defaultValue=""><option value="" disabled>Select one</option><option>Talent discovery</option><option>Solution development</option><option>Venture discovery</option><option>Combination</option><option>Not sure — StartupFair should recommend</option></select></label>
           <label>Preferred format<select required name="challengeFormat" defaultValue=""><option value="" disabled>Select one</option><option>Public</option><option>Private</option><option>Hybrid</option><option>Not sure</option></select></label>
@@ -2897,7 +2895,7 @@ function ChallengeProposalProblemPage() {
             <Link className="button" href="/launch-challenge/contact">Back to Contact and Organization</Link>
           </div>
           <p className="wide submission-note"><strong>Protected-information warning:</strong> Do not include confidential information, regulated data, access credentials, personal information, trade secrets, or proprietary technical details at this stage. Protected information can be discussed later under appropriate agreements and controls.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2924,7 +2922,7 @@ function ChallengeProposalTalentPage() {
         <p>Describe who should participate, the capabilities they need, and any lawful eligibility or screening requirements.</p>
       </section>
       <Section eyebrow="Participant design" title="Who Should Take Part?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/resources"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/resources"); }}>
           <label>Participation structure<select required name="participationStructure" defaultValue=""><option value="" disabled>Select one</option><option>Individuals</option><option>Teams</option><option>Both individuals and teams</option></select></label>
           <label>Geographic eligibility<select required name="geographicEligibility" defaultValue=""><option value="" disabled>Select one</option><option>Global</option><option>Selected countries</option><option>Selected regions</option><option>To be determined</option></select></label>
           <label>Application access<select required name="applicationAccess" defaultValue=""><option value="" disabled>Select one</option><option>Public applications</option><option>Invitation only</option><option>Hybrid</option><option>To be determined</option></select></label>
@@ -2952,7 +2950,7 @@ function ChallengeProposalTalentPage() {
             <button className="button primary" type="submit">Continue</button>
             <Link className="button" href="/launch-challenge/problem">Back to Challenge Objective</Link>
           </div>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -2977,7 +2975,7 @@ function ChallengeProposalResourcesPage() {
         <p>Describe the resources participants may use and the preliminary controls required to protect data, systems, organizations, and participant work.</p>
       </section>
       <Section eyebrow="Protected challenge design" title="Resources, Controls and Preliminary Terms">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/timeline"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/timeline"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Available or anticipated resources <small>(select all that apply)</small></legend>
             {resources.map((item) => <label className="check" key={item}><input type="checkbox" name="resources" value={item} />{item}</label>)}
@@ -3007,7 +3005,7 @@ function ChallengeProposalResourcesPage() {
             <Link className="button" href="/launch-challenge/talent">Back to Desired Talent</Link>
           </div>
           <p className="wide submission-note">Do not include protected data, access credentials, security secrets, personal information, or proprietary technical details in this proposal. StartupFair may request a controlled follow-up under appropriate agreements.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3035,7 +3033,7 @@ function ChallengeProposalTimelinePage() {
         <p>Share the organization’s preliminary timing, available resources, approval requirements, and realistic pathways for selected participants.</p>
       </section>
       <Section eyebrow="Program feasibility" title="Timing, Resources and Follow-Through">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/privacy"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/privacy"); }}>
           <label>Preferred launch date<input required type="date" name="launchDate" /></label>
           <label>Date flexibility<select required name="dateFlexibility" defaultValue=""><option value="" disabled>Select one</option><option>Fixed date</option><option>Flexible within 30 days</option><option>Flexible within 90 days</option><option>Timing not established</option></select></label>
           <label>Preferred application period<input required name="applicationPeriod" placeholder="Example: 3 weeks" /></label>
@@ -3066,7 +3064,7 @@ function ChallengeProposalTimelinePage() {
             <button className="button primary" type="submit">Continue</button>
             <Link className="button" href="/launch-challenge/resources">Back to Data, Technology, Security and IP</Link>
           </div>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3081,7 +3079,7 @@ function ChallengeProposalPrivacyPage() {
         <p>Confirm your authority, information safeguards, participant protections, and the preliminary nature of this proposal.</p>
       </section>
       <Section eyebrow="Required acknowledgments" title="Protect People, Information and the Process">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/review"); }}>
+        <EmailRoutingForm category="challenges" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/review"); }}>
           <label className="wide check"><input required type="checkbox" name="authorizedToPropose" />I am authorized to propose this challenge and discuss it on behalf of the organization.</label>
           <label className="wide check"><input required type="checkbox" name="protectedInformation" />I have not included protected data, credentials, protected health information, trade secrets, or confidential information that I am not authorized to share.</label>
           <label className="wide check"><input required type="checkbox" name="participantInformation" />Participant, candidate, and applicant information will be used only for the approved challenge, evaluation, talent, or opportunity purpose.</label>
@@ -3098,7 +3096,7 @@ function ChallengeProposalPrivacyPage() {
             <Link className="button" href="/launch-challenge/timeline">Back to Timeline, Budget and Outcomes</Link>
           </div>
           <p className="wide submission-note">Do not submit protected or regulated information through this prototype. Separate agreements and secure workflows are required before protected resources are shared.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3132,7 +3130,7 @@ function ChallengeProposalReviewPage() {
         </div>
       </Section>
       <Section eyebrow="Ready to submit" title="Required Confirmations" soft>
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/confirmation"); }}>
+        <EmailRoutingForm category="challenges" showEmailContact className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/launch-challenge/confirmation"); }}>
           <label className="wide check"><input required type="checkbox" name="accurate" />I have reviewed the proposal and confirm that the information is accurate and complete to the best of my knowledge.</label>
           <label className="wide check"><input required type="checkbox" name="authorized" />I am authorized to submit this proposal and discuss a potential challenge on behalf of the organization.</label>
           <label className="wide check"><input required type="checkbox" name="protectedInformation" />The proposal does not contain protected data, access credentials, personal information, trade secrets, confidential information, or proprietary material that I am not authorized to share.</label>
@@ -3146,7 +3144,7 @@ function ChallengeProposalReviewPage() {
             <Link className="button" href="/launch-challenge/privacy">Back to Privacy and Acknowledgments</Link>
           </div>
           <p className="wide submission-note">When production processing is connected, StartupFair should generate a proposal reference and send a confirmation email after submission.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3254,7 +3252,7 @@ function TalentRequestContactPage() {
         <p>Identify the organization and the person authorized to discuss its role, project, or talent need.</p>
       </section>
       <Section eyebrow="Verified request" title="Primary Contact and Organization">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/need"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/need"); }}>
           <label>Full name<input required autoComplete="name" name="contactName" /></label>
           <label>Job title<input required name="jobTitle" /></label>
           <label>Business email<input required type="email" autoComplete="email" name="businessEmail" /></label>
@@ -3284,7 +3282,7 @@ function TalentRequestContactPage() {
             <Link className="button" href="/find-talent">Back to Introduction</Link>
           </div>
           <p className="wide submission-note">Request details remain private and accessible only to authorized StartupFair personnel unless separate sharing permission is provided.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3307,7 +3305,7 @@ function TalentRequestNeedPage() {
         <p>Describe the business need, the people or team required, and the outcomes the organization wants to achieve.</p>
       </section>
       <Section eyebrow="Talent need" title="What Does the Organization Need?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/qualifications"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/qualifications"); }}>
           <label>Request type<select required name="requestType" defaultValue=""><option value="" disabled>Select one</option><option>Full-time hire</option><option>Contract professional</option><option>Consultant or advisor</option><option>Project-based individual</option><option>Project team</option><option>Pilot or implementation team</option><option>Research collaborator</option><option>Founder or venture-team member</option><option>Multiple needs</option><option>Not sure — StartupFair should recommend</option></select></label>
           <label>Number of people or teams needed<input required name="quantity" /></label>
           <label className="wide">Role or project title<input required name="requestTitle" /></label>
@@ -3328,7 +3326,7 @@ function TalentRequestNeedPage() {
             <Link className="button" href="/find-talent/contact">Back to Organization and Contact</Link>
           </div>
           <p className="wide submission-note"><strong>Protected-information warning:</strong> Do not include confidential information, personal data, access credentials, trade secrets, protected health information, or proprietary technical details. Sensitive requirements can be discussed later under appropriate agreements and controls.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3370,7 +3368,7 @@ function TalentRequestQualificationsPage() {
         <p>Define the capabilities that matter most. Separate genuine requirements from preferences so qualified people are not screened out unnecessarily.</p>
       </section>
       <Section eyebrow="Selection criteria" title="What Should the Right Talent Bring?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/logistics"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/logistics"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Relevant expertise areas <small>(select all that apply)</small></legend>
             {expertiseAreas.map((item) => <label className="check" key={item}><input type="checkbox" name="expertiseAreas" value={item} />{item}</label>)}
@@ -3397,7 +3395,7 @@ function TalentRequestQualificationsPage() {
             <Link className="button" href="/find-talent/need">Back to Talent Need</Link>
           </div>
           <p className="wide submission-note">StartupFair may recommend broadening or clarifying criteria when doing so could improve the quality and fairness of talent discovery.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3433,7 +3431,7 @@ function TalentRequestLogisticsPage() {
         <p>Share the practical terms of the opportunity so StartupFair can identify talent whose availability and expectations are aligned.</p>
       </section>
       <Section eyebrow="Engagement details" title="How Will the Work Be Structured?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/privacy"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/privacy"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Acceptable engagement models <small>(select all that apply)</small></legend>
             {engagementModels.map((item) => <label className="check" key={item}><input type="checkbox" name="engagementModels" value={item} />{item}</label>)}
@@ -3462,7 +3460,7 @@ function TalentRequestLogisticsPage() {
             <Link className="button" href="/find-talent/qualifications">Back to Qualifications</Link>
           </div>
           <p className="wide submission-note">Compensation and engagement information is used to improve matching. StartupFair does not guarantee candidate availability, acceptance, hiring, or project completion.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3495,7 +3493,7 @@ function TalentRequestPrivacyPage() {
         <p>Control how the request is presented, how talent is identified, and when organization details may be disclosed.</p>
       </section>
       <Section eyebrow="Controlled discovery" title="How May StartupFair Use and Share This Request?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/review"); }}>
+        <EmailRoutingForm category="talent" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/review"); }}>
           <label>Request visibility<select required name="requestVisibility" defaultValue=""><option value="" disabled>Select one</option><option>Private — do not publish</option><option>Limited — share an anonymized summary with selected talent</option><option>Public summary — only after organization approval</option><option>Not sure — StartupFair should recommend</option></select></label>
           <label>Organization-name disclosure<select required name="organizationDisclosure" defaultValue=""><option value="" disabled>Select one</option><option>May be shared with selected talent immediately</option><option>Share only after candidate interest is confirmed</option><option>Share only after an NDA or confidentiality agreement</option><option>Do not disclose without separate approval</option></select></label>
           <fieldset className="wide application-fieldset">
@@ -3520,7 +3518,7 @@ function TalentRequestPrivacyPage() {
             <Link className="button" href="/find-talent/logistics">Back to Engagement Details</Link>
           </div>
           <p className="wide submission-note">StartupFair will not publicly disclose the organization or its request beyond the permissions selected here. Candidate profiles are shared according to candidate visibility choices and applicable consent requirements.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3553,7 +3551,7 @@ function TalentRequestReviewPage() {
         </div>
       </Section>
       <Section eyebrow="Ready to submit" title="Required Confirmations" soft>
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/confirmation"); }}>
+        <EmailRoutingForm category="talent" showEmailContact className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/find-talent/confirmation"); }}>
           <label className="wide check"><input required type="checkbox" name="accurate" />I have reviewed the talent request and confirm that the information is accurate and complete to the best of my knowledge.</label>
           <label className="wide check"><input required type="checkbox" name="authorized" />I am authorized to submit this request and discuss potential talent introductions, hiring, projects, or other engagements on behalf of the organization.</label>
           <label className="wide check"><input required type="checkbox" name="lawfulCriteria" />I confirm that the selection criteria, location requirements, work-authorization requirements, and evaluation methods are relevant, lawful, and non-discriminatory.</label>
@@ -3568,7 +3566,7 @@ function TalentRequestReviewPage() {
             <Link className="button" href="/find-talent/privacy">Back to Privacy and Matching</Link>
           </div>
           <p className="wide submission-note">When production processing is connected, StartupFair should generate a request reference and send a confirmation email after submission.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3807,7 +3805,7 @@ function PartnershipInquiryContactPage() {
         <p>Tell us who is proposing the partnership and identify the authorized person StartupFair may contact about the inquiry.</p>
       </section>
       <Section eyebrow="About the organization" title="Who Is Interested in Partnering?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/contribution"); }}>
+        <EmailRoutingForm category="partners" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/contribution"); }}>
           <label>Organization or professional name<input required name="organizationName" /></label>
           <label>Website <small>(optional)</small><input type="url" name="website" placeholder="https://" /></label>
           <label>Organization type<select required name="organizationType" defaultValue=""><option value="" disabled>Select one</option>{organizationTypes.map((item) => <option key={item}>{item}</option>)}</select></label>
@@ -3832,7 +3830,7 @@ function PartnershipInquiryContactPage() {
             <Link className="button" href="/partner-inquiry">Back to Partnership Opportunities</Link>
           </div>
           <p className="wide submission-note"><strong>Protected-information warning:</strong> Do not include confidential information, personal data about other people, access credentials, protected health information, trade secrets, or proprietary technical details. Sensitive matters can be discussed later under appropriate agreements and controls.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3873,7 +3871,7 @@ function PartnershipInquiryContributionPage() {
         <p>Describe what the organization hopes to achieve and the practical value it may contribute to StartupFair participants, challenges, or ecosystem programs.</p>
       </section>
       <Section eyebrow="Mutual value" title="What Could This Partnership Accomplish?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/sponsorship"); }}>
+        <EmailRoutingForm category="partners" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/sponsorship"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Partnership categories of interest <small>(select all that apply)</small></legend>
             {partnershipCategories.map((item) => <label className="check" key={item}><input type="checkbox" name="partnershipCategories" value={item} />{item}</label>)}
@@ -3902,7 +3900,7 @@ function PartnershipInquiryContributionPage() {
             <Link className="button" href="/partner-inquiry/contact">Back to Organization and Contact</Link>
           </div>
           <p className="wide submission-note">Proposed contributions and outcomes are preliminary. StartupFair will assess relevance, feasibility, participant value, privacy, independence, conflicts, and responsible-use requirements before any partnership is approved.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -3955,7 +3953,7 @@ function PartnershipInquirySponsorshipPage() {
         <p>Complete this section if the organization may sponsor, support, or collaborate on a StartupFair challenge. Non-sponsors may select “Not applicable” and continue.</p>
       </section>
       <Section eyebrow="Potential sponsorship" title="How Might the Organization Support a Challenge?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/focus"); }}>
+        <EmailRoutingForm category="partners" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/focus"); }}>
           <label>Sponsorship interest<select required name="sponsorshipInterest" defaultValue=""><option value="" disabled>Select one</option><option>Yes — we want to sponsor a challenge</option><option>Possibly — we want to explore sponsorship</option><option>We want to support a challenge without being the primary sponsor</option><option>Not applicable — sponsorship is not part of this inquiry</option></select></label>
           <label>Preferred challenge structure<select required name="challengeStructure" defaultValue=""><option value="" disabled>Select one</option><option>Public</option><option>Private or invite-only</option><option>Hybrid — public summary with controlled details</option><option>Not sure — StartupFair should recommend</option><option>Not applicable</option></select></label>
           <fieldset className="wide application-fieldset">
@@ -3991,7 +3989,7 @@ function PartnershipInquirySponsorshipPage() {
             <Link className="button" href="/partner-inquiry/contribution">Back to Goals and Contributions</Link>
           </div>
           <p className="wide submission-note">All challenge funding, branding, rules, data use, intellectual property, evaluation, participant communications, and potential outcomes require separate review and written agreement before launch.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -4064,7 +4062,7 @@ function PartnershipInquiryFocusPage() {
         <p>Identify the sectors, innovation themes, regions, and participant communities most relevant to the proposed partnership.</p>
       </section>
       <Section eyebrow="Partnership focus" title="Where Should the Partnership Create Value?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/timeline"); }}>
+        <EmailRoutingForm category="partners" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/timeline"); }}>
           <fieldset className="wide application-fieldset">
             <legend>Industries and sectors of interest <small>(select all that apply)</small></legend>
             {industries.map((item) => <label className="check" key={item}><input type="checkbox" name="industries" value={item} />{item}</label>)}
@@ -4099,7 +4097,7 @@ function PartnershipInquiryFocusPage() {
             <Link className="button" href="/partner-inquiry/sponsorship">Back to Sponsorship Preferences</Link>
           </div>
           <p className="wide submission-note">StartupFair may recommend changes to improve relevance, accessibility, geographic feasibility, participant reach, or fairness before a partnership or challenge is activated.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -4155,7 +4153,7 @@ function PartnershipInquiryTimelinePage() {
         <p>Share the organization’s preliminary schedule, resource commitment, approval process, and ability to support a responsible partnership.</p>
       </section>
       <Section eyebrow="Partnership readiness" title="When and How Could the Organization Move Forward?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/privacy"); }}>
+        <EmailRoutingForm category="partners" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/privacy"); }}>
           <label>Preferred partnership start date<input required type="date" name="preferredStartDate" /></label>
           <label>Start-date flexibility<select required name="startDateFlexibility" defaultValue=""><option value="" disabled>Select one</option><option>Fixed or deadline-driven</option><option>Flexible within 30 days</option><option>Flexible within 90 days</option><option>Flexible within 6 months</option><option>Exploratory — no date established</option></select></label>
           <label>Preferred relationship duration<select required name="relationshipDuration" defaultValue=""><option value="" disabled>Select one</option><option>One-time activity or event</option><option>Less than 3 months</option><option>3–6 months</option><option>6–12 months</option><option>More than 12 months</option><option>Ongoing strategic relationship</option><option>To be determined</option></select></label>
@@ -4190,7 +4188,7 @@ function PartnershipInquiryTimelinePage() {
             <Link className="button" href="/partner-inquiry/focus">Back to Industry and Audience Focus</Link>
           </div>
           <p className="wide submission-note">Dates, budgets, resources, and approvals entered here are preliminary and do not create a financial or contractual commitment. Final responsibilities require documented approval and written agreement.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -4226,7 +4224,7 @@ function PartnershipInquiryPrivacyPage() {
         <p>Set clear boundaries for how StartupFair may review, discuss, and disclose the partnership inquiry and any future partner recognition.</p>
       </section>
       <Section eyebrow="Controlled collaboration" title="What May StartupFair Use and Share?">
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/review"); }}>
+        <EmailRoutingForm category="partners" className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/review"); }}>
           <label>Inquiry visibility<select required name="inquiryVisibility" defaultValue=""><option value="" disabled>Select one</option><option>Private — do not disclose outside authorized StartupFair personnel</option><option>Limited — discuss an anonymized summary with selected parties</option><option>Controlled — share approved information with selected participants or partners</option><option>Public summary — only after separate organization approval</option><option>Not sure — StartupFair should recommend</option></select></label>
           <label>Organization-name disclosure<select required name="organizationDisclosure" defaultValue=""><option value="" disabled>Select one</option><option>May be shared during initial partnership discussions</option><option>Share only with selected parties after organization approval</option><option>Share only after an NDA or confidentiality agreement</option><option>Do not disclose without separate written approval</option></select></label>
           <label>Public partner or sponsor recognition<select required name="publicRecognition" defaultValue=""><option value="" disabled>Select one</option><option>Permitted after the partnership is formally approved</option><option>Permitted only for approved programs or challenges</option><option>Permitted only after reviewing each announcement</option><option>Private partnership — no public recognition</option><option>To be determined in a separate agreement</option></select></label>
@@ -4254,7 +4252,7 @@ function PartnershipInquiryPrivacyPage() {
             <Link className="button" href="/partner-inquiry/timeline">Back to Timeline and Readiness</Link>
           </div>
           <p className="wide submission-note">No organization will be publicly presented as an official StartupFair partner or sponsor based solely on this inquiry. Public recognition requires a formally approved relationship and applicable brand permissions.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -4288,7 +4286,7 @@ function PartnershipInquiryReviewPage() {
         </div>
       </Section>
       <Section eyebrow="Ready to submit" title="Required Confirmations" soft>
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/confirmation"); }}>
+        <EmailRoutingForm category="partners" showEmailContact className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/partner-inquiry/confirmation"); }}>
           <label className="wide check"><input required type="checkbox" name="accurate" />I have reviewed the inquiry and confirm that the information is accurate and complete to the best of my knowledge.</label>
           <label className="wide check"><input required type="checkbox" name="authorized" />I am authorized to submit this inquiry or have permission to explore a potential partnership on behalf of the named organization.</label>
           <label className="wide check"><input required type="checkbox" name="preliminary" />I understand that proposed contributions, funding, resources, schedules, approvals, opportunities, recognition, and outcomes are preliminary and do not create a binding commitment.</label>
@@ -4305,7 +4303,7 @@ function PartnershipInquiryReviewPage() {
             <Link className="button" href="/partner-inquiry/privacy">Back to Privacy and Disclosure</Link>
           </div>
           <p className="wide submission-note">When production processing is connected, StartupFair should generate an inquiry reference and send a confirmation email after submission.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
@@ -4552,26 +4550,31 @@ function ContactPage() {
             <h3>Launch a Challenge</h3>
             <p>Bring a real business, technology, healthcare, workforce, research, or social-impact problem to StartupFair.</p>
             <Link className="text-link" href="/launch-challenge">Propose a challenge</Link>
+            <EmailRecipientNotice category="challenges" />
           </article>
           <article className="card">
             <h3>Find Proven Talent</h3>
             <p>Request talent for a role, project, pilot, research collaboration, or venture opportunity.</p>
             <Link className="text-link" href="/find-talent">Submit a talent request</Link>
+            <EmailRecipientNotice category="talent" />
           </article>
           <article className="card">
             <h3>Create a Talent Profile</h3>
             <p>Present your skills, experience, interests, work samples, and opportunity preferences.</p>
             <ActionLink className="text-link" href="/talent-profile/contact">Create a free profile</ActionLink>
+            <EmailRecipientNotice category="talent" />
           </article>
           <article className="card">
             <h3>Partnership or Sponsorship</h3>
             <p>Explore a corporate, university, technology, expert, investor, community, or challenge-sponsor relationship.</p>
             <Link className="text-link" href="/partner-inquiry">Start a partnership inquiry</Link>
+            <EmailRecipientNotice category="partners" />
           </article>
           <article className="card">
             <h3>Challenge Participation</h3>
             <p>Review available challenges, eligibility, application requirements, timelines, and published rules.</p>
             <Link className="text-link" href="/challenges">Explore challenges</Link>
+            <EmailRecipientNotice category="challenges" />
           </article>
           <article className="card">
             <h3>General, Media or Support</h3>
@@ -4597,7 +4600,7 @@ function ContactPage() {
         eyebrow="General contact form"
         title="For inquiries that do not fit a dedicated pathway."
       >
-        <form className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/contact/confirmation"); }}>
+        <EmailRoutingForm category="general" showEmailContact className="contact-form" onSubmit={(event) => { event.preventDefault(); window.location.assign("/contact/confirmation"); }}>
           <label>
             Inquiry type
             <select required name="type" defaultValue="">
@@ -4649,7 +4652,7 @@ function ContactPage() {
           </label>
           <div className="wide actions"><button className="button primary" type="submit">Submit General Inquiry</button></div>
           <p className="wide submission-note"><strong>Prototype notice:</strong> During website development, this form does not transmit or store information. Production form processing, secure storage, routing, notifications, identity verification for privacy requests, and support tracking must be connected before accepting real inquiries.</p>
-        </form>
+        </EmailRoutingForm>
       </Section>
     </Layout>
   );
