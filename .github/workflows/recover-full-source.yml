@@ -1,0 +1,61 @@
+name: Recover Full StartupFair Source
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'StartupFair-Complete-Website-Original.zip'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify recovery ZIP exists
+        run: |
+          set -euo pipefail
+          test -f StartupFair-Complete-Website-Original.zip
+          echo "ZIP SHA256:"
+          sha256sum StartupFair-Complete-Website-Original.zip
+
+      - name: Extract recovered source
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/startupfair-recovery
+          mkdir -p /tmp/startupfair-recovery
+          unzip -q StartupFair-Complete-Website-Original.zip -d /tmp/startupfair-recovery
+          echo "Recovered files:"
+          find /tmp/startupfair-recovery -type f | wc -l
+          test -f /tmp/startupfair-recovery/package.json
+          test -f /tmp/startupfair-recovery/components/startupfair-page.tsx
+          test -f /tmp/startupfair-recovery/app/globals.css
+          test -f /tmp/startupfair-recovery/public/startupfair-logo.png
+          test -f /tmp/startupfair-recovery/public/startupfair-hero-global-ai.png
+
+      - name: Restore source into repository
+        run: |
+          set -euo pipefail
+          rsync -a --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            /tmp/startupfair-recovery/ ./
+          rm -f StartupFair-Complete-Website-Original.zip
+          rm -rf .recovery
+          rm -f .github/workflows/test-live-asset.yml
+
+      - name: Commit exact recovered source
+        run: |
+          set -euo pipefail
+          git config user.name "StartupFair Recovery"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Restore complete recovered StartupFair source" || exit 0
+          git push origin main
