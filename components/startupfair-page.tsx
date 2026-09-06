@@ -132,11 +132,11 @@ function Footer() {
     </footer>
   );
 }
-function Layout({ children }: { children: ReactNode }) {
+function Layout({ children, publicPage = false }: { children: ReactNode; publicPage?: boolean }) {
   return (
     <div className="site">
       <Header />
-      <main>{children}</main>
+      <main className={publicPage ? "public-page" : undefined}>{children}</main>
       <Footer />
     </div>
   );
@@ -147,7 +147,7 @@ function Hero({
   copy,
   primary,
   secondary,
-  image,
+  image = "/startupfair-hero-global-ai.png",
 }: {
   eyebrow: string;
   title: string;
@@ -518,7 +518,7 @@ function ChallengesPage() {
     return matchesQuery && matchesStatus && matchesType && matchesIndustry && matchesParticipation;
   });
   return (
-    <Layout>
+    <Layout publicPage>
       <Hero
         eyebrow="Explore Challenges"
         title="Explore Real-World Challenges"
@@ -2611,7 +2611,7 @@ function TalentProfileConfirmationPage() {
 
 function TalentPage() {
   return (
-    <Layout>
+    <Layout publicPage>
       <Hero
         eyebrow="For Talent"
         title="Prove What You Can Build."
@@ -3607,7 +3607,7 @@ function TalentRequestConfirmationPage() {
 
 function OrganizationsPage() {
   return (
-    <Layout>
+    <Layout publicPage>
       <Hero
         eyebrow="For organizations with problems worth solving"
         title="Solve Real Problems. Discover Proven Talent."
@@ -4344,7 +4344,7 @@ function PartnershipInquiryConfirmationPage() {
 
 function PartnersPage() {
   return (
-    <Layout>
+    <Layout publicPage>
       <Hero
         eyebrow="Partner with purpose"
         title="Build the Future of Talent and Innovation Together."
@@ -4452,93 +4452,143 @@ function PartnersPage() {
 
 function AboutPage() {
   return (
-    <Layout>
-      <Hero
-        eyebrow="About StartupFair"
-        title="From Startup Events to a Global Innovation Platform"
-        copy="Founded in 2015, StartupFair is evolving from entrepreneurial event roots into a skills-based talent discovery and open innovation platform."
-        primary={["Explore Challenges", "/challenges"]}
-      />
-      <Section
-        eyebrow="At a glance"
-        title="A clear snapshot of StartupFair today."
-      >
-        <Cards
-          cols={4}
-          items={[
-            { title: "Global", copy: "Participation scope" },
-            { title: "Three Models", copy: "Talent · Innovation · Venture" },
-            { title: "Established 2015", copy: "Entrepreneurial roots" },
-            { title: "Skills-first", copy: "Practical discovery" },
+    <Layout publicPage>
+      <div className="about-page">
+        <Hero
+          eyebrow="About StartupFair"
+          title="Built on Entrepreneurial Roots. Evolving for What Comes Next."
+          copy="Founded in 2015, StartupFair is evolving from startup events and entrepreneurial community building into a global platform for AI talent discovery, practical innovation and credible business opportunities."
+          primary={["Explore Challenges", "/challenges"]}
+          secondary={["Partner With StartupFair", "/partners"]}
+          image="/startupfair-hero-global-ai.png"
+        />
+
+        <section className="section about-story-section">
+          <div className="about-story-grid">
+            <div className="about-story-heading">
+              <span className="eyebrow">Our Story</span>
+              <h2>From bringing entrepreneurs together to helping talent prove what it can build.</h2>
+              <div className="about-story-mark">2015 → Today</div>
+            </div>
+            <div className="about-story-copy">
+              <p>StartupFair was founded in 2015 with a simple purpose: bring ambitious people together, create opportunities to share ideas, and help promising ventures and talent get discovered.</p>
+              <p>In its early years, StartupFair grew through startup events, pitch competitions, networking and entrepreneurial community participation. Those experiences created connections among founders, professionals, students, investors and ecosystem partners.</p>
+              <p>Today, StartupFair is evolving for a different kind of opportunity.</p>
+              <p>AI is changing how people build, how organizations solve problems and how talent proves what it can do. StartupFair is becoming a global platform for practical AI and technology challenges—connecting capable people with real-world problems and creating pathways to hiring, paid projects, pilots, partnerships and new ventures.</p>
+              <p className="about-story-closing">The format is changing, but the purpose remains the same: <strong>bring the right people, ideas and opportunities together—and help meaningful work move forward.</strong></p>
+            </div>
+          </div>
+        </section>
+
+        <Section
+          eyebrow="StartupFair at a glance"
+          title="One platform. Built around demonstrated ability."
+          intro="StartupFair connects capable people, meaningful problems and real opportunities through structured AI and technology challenges."
+          soft
+        >
+          <div className="about-stats">
+            <article><strong>2015</strong><span>Established</span></article>
+            <article><strong>Global</strong><span>Talent and participation</span></article>
+            <article><strong>Skills-First</strong><span>Demonstrated ability over labels</span></article>
+            <article><strong>3 Pathways</strong><span>Talent · Innovation · Venture</span></article>
+          </div>
+        </Section>
+
+        <Section
+          eyebrow="Our Journey"
+          title="From startup events to practical innovation."
+          intro="StartupFair's history is part of the platform's credibility. The model has evolved, but the entrepreneurial purpose remains."
+        >
+          <div className="about-timeline">
+            <article>
+              <span>01</span><small>2015</small>
+              <h3>StartupFair Founded</h3>
+              <p>StartupFair launched around entrepreneurship, startup participation, pitch competitions and community connection.</p>
+            </article>
+            <article>
+              <span>02</span><small>Early Years</small>
+              <h3>Building Community</h3>
+              <p>Events created opportunities for entrepreneurs, professionals, students, investors and ecosystem participants to meet, share ideas and explore new possibilities.</p>
+            </article>
+            <article>
+              <span>03</span><small>Today</small>
+              <h3>A New Platform</h3>
+              <p>StartupFair is evolving beyond events into AI talent discovery, real-world innovation challenges and venture opportunities.</p>
+            </article>
+          </div>
+        </Section>
+
+        <section className="about-evolution">
+          <div className="about-evolution-copy">
+            <span className="eyebrow">Why StartupFair Is Evolving</span>
+            <h2>The opportunity changed. The purpose continues.</h2>
+            <p>AI is changing how people build, how companies solve problems and how talent demonstrates capability. Traditional credentials and resumes tell only part of the story. Increasingly, what matters is what someone can actually understand, create, solve and deliver.</p>
+            <p>StartupFair is designed around that shift: organizations bring forward meaningful problems, talented people apply their skills, work is evaluated through transparent criteria, and strong participants and solutions can move toward meaningful next steps.</p>
+          </div>
+          <div className="about-mission-card">
+            <span>OUR MISSION</span>
+            <blockquote>Connect capable people with real problems and create credible pathways from demonstrated ability and promising ideas to meaningful opportunities.</blockquote>
+          </div>
+        </section>
+
+        <Section
+          eyebrow="What We Believe"
+          title="A platform should earn trust through how it operates."
+          soft
+        >
+          <div className="about-principles">
+            <article><span>01</span><h3>Skills Before Labels</h3><p>Practical ability and demonstrated work should matter.</p></article>
+            <article><span>02</span><h3>Real Problems. Meaningful Outcomes.</h3><p>Challenges should begin with genuine needs and credible potential pathways beyond the competition itself.</p></article>
+            <article><span>03</span><h3>Transparent Evaluation</h3><p>Participants should understand how their work will be evaluated before they begin.</p></article>
+            <article><span>04</span><h3>Responsible Innovation</h3><p>Privacy, confidentiality, intellectual property and participant control should be considered from the start.</p></article>
+          </div>
+        </Section>
+
+        <Section
+          eyebrow="Historical Gallery"
+          title="Preserve the history without confusing the present."
+          intro="StartupFair’s earlier events are part of the platform’s story. These photographs are drawn from the original StartupFair event archive and are presented in their historical context."
+        >
+          <div className="about-history-gallery">
+            <a className="about-history-photo about-history-photo-featured" href="https://www.startupfair.org/lunchbox-gallery.html" target="_blank" rel="noreferrer">
+              <img src="/history/homeslide6.png" alt="StartupFair LunchBox Pitch and Win event at Startup Hall" />
+              <span><small>2016 · Startup Hall</small><strong>LunchBox Pitch & Win</strong></span>
+            </a>
+            <a className="about-history-photo" href="https://www.startupfair.org/lunchbox-gallery.html" target="_blank" rel="noreferrer">
+              <img src="/history/homeslide2.png" alt="StartupFair Pitch and Win event winners holding award checks" />
+              <span><small>2015 · Seattle</small><strong>Pitch Competition</strong></span>
+            </a>
+            <a className="about-history-photo" href="https://www.startupfair.org/lunchbox-gallery.html" target="_blank" rel="noreferrer">
+              <img src="/history/107.jpg" alt="StartupFair community members at a historical LunchBox event" />
+              <span><small>Historical Archive</small><strong>Community & Connections</strong></span>
+            </a>
+            <a className="about-history-photo" href="https://www.startupfair.org/lunchbox-15-september-gallery.html" target="_blank" rel="noreferrer">
+              <img src="/history/29.jpg" alt="StartupFair inaugural LunchBox event winner presentation in September 2015" />
+              <span><small>September 2015</small><strong>Inaugural LunchBox</strong></span>
+            </a>
+          </div>
+          <div className="about-history-note">
+            <p>Historical photographs, event references and past collaborations are shown as part of StartupFair’s archive. They do not imply a current partnership, sponsorship or client relationship.</p>
+            <a href="https://www.startupfair.org/lunchbox-gallery.html" target="_blank" rel="noreferrer">View Historical Archive →</a>
+          </div>
+        </Section>
+
+        <CTA
+          title="Build. Solve. Discover What’s Possible."
+          copy="Whether you want to demonstrate your capabilities, solve an important business problem or contribute to the innovation ecosystem, StartupFair gives you a place to participate."
+          buttons={[
+            ["Explore Challenges", "/challenges"],
+            ["Partner With StartupFair", "/partners"],
           ]}
         />
-      </Section>
-      <Section eyebrow="Our journey" title="A visual history timeline." soft>
-        <div className="timeline">
-          <span>2015 · Founded</span>
-          <span>Early Years · Events</span>
-          <span>Evolution · New Need</span>
-          <span>Today · Platform</span>
-        </div>
-      </Section>
-      <section className="mission">
-        <span className="eyebrow">Mission</span>
-        <h2>
-          Connect talented people, meaningful problems and credible
-          opportunities.
-        </h2>
-      </section>
-      <Section eyebrow="Principles" title="How StartupFair intends to operate.">
-        <Cards
-          items={[
-            {
-              title: "Skills Before Labels",
-              copy: "Practical ability and demonstrated work.",
-            },
-            {
-              title: "Meaningful Outcomes",
-              copy: "Credible potential pathways.",
-            },
-            { title: "Transparent Evaluation", copy: "Published criteria." },
-            { title: "Participant Control", copy: "Consent-based visibility." },
-            {
-              title: "Responsible Innovation",
-              copy: "Clear data and IP terms.",
-            },
-            {
-              title: "Verified Claims",
-              copy: "Evidence-backed history and outcomes.",
-            },
-          ]}
-        />
-      </Section>
-      <Section
-        eyebrow="Historical gallery"
-        title="Preserve the history without confusing the present."
-        soft
-      >
-        <div className="gallery">
-          <div>Primary historical event image</div>
-          <div>Event image</div>
-          <div>Community image</div>
-          <div>Pitch image</div>
-        </div>
-      </Section>
-      <CTA
-        title="Choose How You Want to Engage"
-        copy="Explore challenges, bring a problem or build a partnership."
-        buttons={[
-          ["Explore Challenges", "/challenges"],
-          ["Contact StartupFair", "/contact"],
-        ]}
-      />
+      </div>
     </Layout>
   );
 }
 
 function ContactPage() {
   return (
-    <Layout>
+    <Layout publicPage>
       <Hero
         eyebrow="Contact StartupFair"
         title="Start With the Right Conversation."

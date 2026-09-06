@@ -1,0 +1,30 @@
+[
+  {
+    "source": "https://www.startupfair.org/img/homeslide6.png",
+    "local": "/history/homeslide6.png",
+    "sha256": "25e232656f2ca074748c1632c587d2cbc4ea6169657a54298e646bdea49318f1",
+    "bytes": 1755535,
+    "status": "preserved"
+  },
+  {
+    "source": "https://www.startupfair.org/img/homeslide2.png",
+    "local": "/history/homeslide2.png",
+    "sha256": "326ac8fa31906507213f1f90256f7db2ff3941f91d8437b18bd750c326a1967a",
+    "bytes": 625877,
+    "status": "preserved"
+  },
+  {
+    "source": "https://www.startupfair.org/img/lunchbox/107.jpg",
+    "local": "/history/107.jpg",
+    "sha256": "05968a819cecfb2c632379aa7d1b33d3d5d438f0d93da8282a2b54ae4785189f",
+    "bytes": 239968,
+    "status": "preserved"
+  },
+  {
+    "source": "https://www.startupfair.org/img/lunchbox/29.jpg",
+    "local": "/history/29.jpg",
+    "sha256": "3d4f6adfa34b92974c8e6d401b3ca6c7a98f40d03a82fbb74a3a6b79c70bec7a",
+    "bytes": 123937,
+    "status": "preserved"
+  }
+]

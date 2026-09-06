@@ -3,6 +3,9 @@ import { ReliableNavigation } from "@/components/reliable-navigation";
 import "./globals.css";
 import "./home-review.css";
 import "./inquiry-fix.css";
+import "./about-history.css";
+import "./public-template.css";
+import "./review-gallery.css";
 
 export const metadata: Metadata = {
   title: "StartupFair — AI Talent & Open Innovation",

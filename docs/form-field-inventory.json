@@ -1,0 +1,974 @@
+[
+  {
+    "component": "HomeInquiryPanel",
+    "category": "general",
+    "fields": [
+      "contactPermission",
+      "email",
+      "interest",
+      "message",
+      "name",
+      "organization"
+    ],
+    "submitDestinations": [
+      "/contact/confirmation"
+    ]
+  },
+  {
+    "component": "ApplicationTypePage",
+    "category": "challenges",
+    "fields": [
+      "applicationType",
+      "primaryContactEmail",
+      "primaryContactName",
+      "teamMembers",
+      "teamName",
+      "teamProfileConfirmation",
+      "teamRoles",
+      "teamSize"
+    ],
+    "submitDestinations": []
+  },
+  {
+    "component": "ApplicationContactPage",
+    "category": "challenges",
+    "fields": [
+      "city",
+      "communicationsConsent",
+      "contactMethod",
+      "country",
+      "email",
+      "firstName",
+      "lastName",
+      "phone",
+      "preferredName",
+      "region",
+      "timeZone"
+    ],
+    "submitDestinations": []
+  },
+  {
+    "component": "ClinicianApplicationBackgroundPage",
+    "category": "challenges",
+    "fields": [
+      "discipline",
+      "education",
+      "experience",
+      "expertise",
+      "jobTitle",
+      "organization",
+      "professionalStatus",
+      "professionalSummary"
+    ],
+    "submitDestinations": [
+      "/apply/ai-clinician-matching/challenge-experience"
+    ]
+  },
+  {
+    "component": "EnterpriseApplicationBackgroundPage",
+    "category": "challenges",
+    "fields": [
+      "discipline",
+      "education",
+      "experience",
+      "expertise",
+      "jobTitle",
+      "organization",
+      "professionalStatus",
+      "professionalSummary"
+    ],
+    "submitDestinations": [
+      "/apply/enterprise-ai-agent/challenge-experience"
+    ]
+  },
+  {
+    "component": "PublisherApplicationBackgroundPage",
+    "category": "challenges",
+    "fields": [
+      "discipline",
+      "education",
+      "experience",
+      "expertise",
+      "jobTitle",
+      "organization",
+      "professionalStatus",
+      "professionalSummary"
+    ],
+    "submitDestinations": [
+      "/apply/publisher-campaign-intelligence/challenge-experience"
+    ]
+  },
+  {
+    "component": "PublisherApplicationExperiencePage",
+    "category": "challenges",
+    "fields": [
+      "experienceAreas",
+      "matchingExperience",
+      "performanceMarketingFamiliarity",
+      "publisherFamiliarity",
+      "relevantProject",
+      "sensitiveData",
+      "sensitiveDataExperience"
+    ],
+    "submitDestinations": [
+      "/apply/publisher-campaign-intelligence/motivation"
+    ]
+  },
+  {
+    "component": "PublisherApplicationApproachPage",
+    "category": "challenges",
+    "fields": [
+      "expectedContribution",
+      "motivation",
+      "preliminaryApproach",
+      "priorityProblem",
+      "safeguards",
+      "successMeasures",
+      "toolsAndResources",
+      "usersAndDecisions",
+      "weeklyAvailability"
+    ],
+    "submitDestinations": [
+      "/apply/publisher-campaign-intelligence/links"
+    ]
+  },
+  {
+    "component": "PublisherApplicationLinksPage",
+    "category": "challenges",
+    "fields": [
+      "caseStudy",
+      "codeRepository",
+      "demonstration",
+      "linkContext",
+      "linkedin",
+      "portfolio",
+      "publishedWork",
+      "teamLinks",
+      "website"
+    ],
+    "submitDestinations": [
+      "/apply/publisher-campaign-intelligence/acknowledgments"
+    ]
+  },
+  {
+    "component": "PublisherApplicationAcknowledgmentsPage",
+    "category": "challenges",
+    "fields": [
+      "acknowledgmentDate",
+      "confirmations",
+      "electronicAcknowledgment",
+      "legalName",
+      "otherOpportunities",
+      "policyAgreement"
+    ],
+    "submitDestinations": [
+      "/apply/publisher-campaign-intelligence/review"
+    ]
+  },
+  {
+    "component": "EnterpriseApplicationExperiencePage",
+    "category": "challenges",
+    "fields": [
+      "agentFamiliarity",
+      "enterpriseFamiliarity",
+      "experienceAreas",
+      "relevantProject",
+      "responsibleAI",
+      "responsibleAIExperience"
+    ],
+    "submitDestinations": [
+      "/apply/enterprise-ai-agent/motivation"
+    ]
+  },
+  {
+    "component": "EnterpriseApplicationApproachPage",
+    "category": "challenges",
+    "fields": [
+      "expectedContribution",
+      "motivation",
+      "preliminaryApproach",
+      "safetyApproach",
+      "toolsAndResources",
+      "weeklyAvailability",
+      "workflowProblem"
+    ],
+    "submitDestinations": [
+      "/apply/enterprise-ai-agent/links"
+    ]
+  },
+  {
+    "component": "EnterpriseApplicationLinksPage",
+    "category": "challenges",
+    "fields": [
+      "codeRepository",
+      "demonstration",
+      "linkContext",
+      "linkedin",
+      "portfolio",
+      "publishedWork",
+      "teamLinks",
+      "website"
+    ],
+    "submitDestinations": [
+      "/apply/enterprise-ai-agent/acknowledgments"
+    ]
+  },
+  {
+    "component": "EnterpriseApplicationAcknowledgmentsPage",
+    "category": "challenges",
+    "fields": [
+      "acknowledgmentDate",
+      "confirmations",
+      "electronicAcknowledgment",
+      "legalName",
+      "otherOpportunities",
+      "policyAgreement"
+    ],
+    "submitDestinations": [
+      "/apply/enterprise-ai-agent/review"
+    ]
+  },
+  {
+    "component": "ClinicianApplicationExperiencePage",
+    "category": "challenges",
+    "fields": [
+      "experienceAreas",
+      "healthcareFamiliarity",
+      "matchingFamiliarity",
+      "relevantProject",
+      "responsibleData",
+      "responsibleDataExperience"
+    ],
+    "submitDestinations": [
+      "/apply/ai-clinician-matching/motivation"
+    ]
+  },
+  {
+    "component": "ClinicianApplicationApproachPage",
+    "category": "challenges",
+    "fields": [
+      "expectedContribution",
+      "motivation",
+      "preliminaryApproach",
+      "problemInterest",
+      "toolsAndResources",
+      "weeklyAvailability"
+    ],
+    "submitDestinations": [
+      "/apply/ai-clinician-matching/links"
+    ]
+  },
+  {
+    "component": "ClinicianApplicationLinksPage",
+    "category": "challenges",
+    "fields": [
+      "codeRepository",
+      "demonstration",
+      "linkContext",
+      "linkedin",
+      "portfolio",
+      "publishedWork",
+      "teamLinks",
+      "website"
+    ],
+    "submitDestinations": [
+      "/apply/ai-clinician-matching/acknowledgments"
+    ]
+  },
+  {
+    "component": "ClinicianApplicationAcknowledgmentsPage",
+    "category": "challenges",
+    "fields": [
+      "acknowledgmentDate",
+      "confirmations",
+      "electronicAcknowledgment",
+      "legalName",
+      "otherOpportunities",
+      "policyAgreement"
+    ],
+    "submitDestinations": [
+      "/apply/ai-clinician-matching/review"
+    ]
+  },
+  {
+    "component": "ClinicianApplicationReviewPage",
+    "category": "challenges",
+    "fields": [
+      "followUp",
+      "noGuarantee",
+      "reviewed"
+    ],
+    "submitDestinations": [
+      "/apply/ai-clinician-matching/confirmation"
+    ]
+  },
+  {
+    "component": "EnterpriseApplicationReviewPage",
+    "category": "challenges",
+    "fields": [
+      "followUp",
+      "noGuarantee",
+      "reviewed"
+    ],
+    "submitDestinations": [
+      "/apply/enterprise-ai-agent/confirmation"
+    ]
+  },
+  {
+    "component": "PublisherApplicationReviewPage",
+    "category": "challenges",
+    "fields": [
+      "followUp",
+      "noGuarantee",
+      "reviewed"
+    ],
+    "submitDestinations": [
+      "/apply/publisher-campaign-intelligence/confirmation"
+    ]
+  },
+  {
+    "component": "TalentProfileContactPage",
+    "category": "talent",
+    "fields": [
+      "city",
+      "contactMethod",
+      "country",
+      "displayName",
+      "email",
+      "legalName",
+      "linkedin",
+      "otherOpportunityConsent",
+      "phone",
+      "preferredLanguage",
+      "profileContactConsent",
+      "region",
+      "source",
+      "timezone",
+      "website"
+    ],
+    "submitDestinations": [
+      "/talent-profile/background"
+    ]
+  },
+  {
+    "component": "TalentProfileBackgroundPage",
+    "category": "talent",
+    "fields": [
+      "careerStage",
+      "discipline",
+      "education",
+      "experience",
+      "industries",
+      "jobTitle",
+      "organization",
+      "professionalHeadline",
+      "professionalStatus",
+      "professionalSummary"
+    ],
+    "submitDestinations": [
+      "/talent-profile/skills"
+    ]
+  },
+  {
+    "component": "TalentProfileSkillsPage",
+    "category": "talent",
+    "fields": [
+      "credentials",
+      "languages",
+      "primaryExpertise",
+      "proficiency",
+      "skillCategories",
+      "skillExample",
+      "tools",
+      "topSkills"
+    ],
+    "submitDestinations": [
+      "/talent-profile/interests"
+    ]
+  },
+  {
+    "component": "TalentProfileInterestsPage",
+    "category": "talent",
+    "fields": [
+      "challengeDifficulty",
+      "challengeTypes",
+      "focusAreas",
+      "goals",
+      "opportunities",
+      "participationPreference",
+      "relocationPreference",
+      "travelPreference",
+      "weeklyAvailability",
+      "workArrangement"
+    ],
+    "submitDestinations": [
+      "/talent-profile/work-samples"
+    ]
+  },
+  {
+    "component": "TalentProfileWorkSamplesPage",
+    "category": "talent",
+    "fields": [
+      "additionalContext",
+      "caseStudy",
+      "codeRepository",
+      "demonstration",
+      "otherWork",
+      "portfolio",
+      "product",
+      "projectContribution",
+      "projectLink",
+      "projectName",
+      "projectProblem",
+      "projectResult",
+      "projectTools",
+      "publication",
+      "website"
+    ],
+    "submitDestinations": [
+      "/talent-profile/privacy"
+    ]
+  },
+  {
+    "component": "TalentProfilePrivacyPage",
+    "category": "talent",
+    "fields": [
+      "approvedFields",
+      "mediatedContact",
+      "privacyAgreement",
+      "visibility",
+      "visibilityControl"
+    ],
+    "submitDestinations": [
+      "/talent-profile/review"
+    ]
+  },
+  {
+    "component": "TalentProfileReviewPage",
+    "category": "talent",
+    "fields": [
+      "accurate",
+      "noGuarantee",
+      "permission",
+      "visibility"
+    ],
+    "submitDestinations": [
+      "/talent-profile/confirmation"
+    ]
+  },
+  {
+    "component": "ChallengeProposalContactPage",
+    "category": "challenges",
+    "fields": [
+      "authority",
+      "businessEmail",
+      "contactCountry",
+      "contactMethod",
+      "contactName",
+      "headquartersCountry",
+      "industry",
+      "jobTitle",
+      "linkedin",
+      "operatingRegions",
+      "organizationDescription",
+      "organizationName",
+      "organizationSize",
+      "organizationType",
+      "organizationWebsite",
+      "phone",
+      "source",
+      "timezone"
+    ],
+    "submitDestinations": [
+      "/launch-challenge/problem"
+    ]
+  },
+  {
+    "component": "ChallengeProposalProblemPage",
+    "category": "challenges",
+    "fields": [
+      "affectedUsers",
+      "baseline",
+      "challengeFormat",
+      "challengeModel",
+      "challengeTitle",
+      "currentWorkflow",
+      "desiredDeliverable",
+      "exclusions",
+      "improvedOutcomes",
+      "painPoints",
+      "priorAttempts",
+      "problemStatement",
+      "successMeasures",
+      "whyNow"
+    ],
+    "submitDestinations": [
+      "/launch-challenge/talent"
+    ]
+  },
+  {
+    "component": "ChallengeProposalTalentPage",
+    "category": "challenges",
+    "fields": [
+      "accessibility",
+      "applicationAccess",
+      "conflicts",
+      "credentialsRequired",
+      "domainKnowledge",
+      "employeeParticipation",
+      "essentialSkills",
+      "experienceLevel",
+      "geographicEligibility",
+      "inclusion",
+      "lawfulCriteria",
+      "limitations",
+      "participantCount",
+      "participantProfiles",
+      "participationStructure",
+      "preferredSkills",
+      "requiredCredentials",
+      "screeningEvidence",
+      "teamComposition",
+      "teamSize"
+    ],
+    "submitDestinations": [
+      "/launch-challenge/resources"
+    ]
+  },
+  {
+    "component": "ChallengeProposalResourcesPage",
+    "category": "challenges",
+    "fields": [
+      "approvedTools",
+      "complianceRequirements",
+      "dataClassification",
+      "dataControls",
+      "dataDescription",
+      "deploymentExpectations",
+      "externalData",
+      "ipExpectations",
+      "nda",
+      "nonBindingTerms",
+      "openSource",
+      "prohibitedTools",
+      "resourceDetails",
+      "resources",
+      "responsibleAI",
+      "securityRequirements",
+      "technologyStack",
+      "thirdPartyLicenses"
+    ],
+    "submitDestinations": [
+      "/launch-challenge/timeline"
+    ]
+  },
+  {
+    "component": "ChallengeProposalTimelinePage",
+    "category": "challenges",
+    "fields": [
+      "applicationPeriod",
+      "approvals",
+      "budgetIncludes",
+      "budgetRange",
+      "buildDuration",
+      "completionDate",
+      "confirmedOutcomesOnly",
+      "currency",
+      "dateFlexibility",
+      "deadlines",
+      "decisionProcess",
+      "evaluationPeriod",
+      "implementationResources",
+      "internalSupport",
+      "launchDate",
+      "outcomes",
+      "participantUpdates",
+      "presentationDate",
+      "realisticOffer",
+      "selectionPeriod"
+    ],
+    "submitDestinations": [
+      "/launch-challenge/privacy"
+    ]
+  },
+  {
+    "component": "ChallengeProposalPrivacyPage",
+    "category": "challenges",
+    "fields": [
+      "acknowledgmentDate",
+      "authorizedToPropose",
+      "contactPermission",
+      "electronicAcknowledgment",
+      "evaluationIntegrity",
+      "legalName",
+      "participantInformation",
+      "policyAgreement",
+      "preliminaryTerms",
+      "protectedInformation",
+      "publicRecognition"
+    ],
+    "submitDestinations": [
+      "/launch-challenge/review"
+    ]
+  },
+  {
+    "component": "ChallengeProposalReviewPage",
+    "category": "challenges",
+    "fields": [
+      "accurate",
+      "authorized",
+      "contact",
+      "noGuarantee",
+      "policies",
+      "preliminary",
+      "protectedInformation",
+      "separateAgreements"
+    ],
+    "submitDestinations": [
+      "/launch-challenge/confirmation"
+    ]
+  },
+  {
+    "component": "TalentRequestContactPage",
+    "category": "talent",
+    "fields": [
+      "authority",
+      "businessEmail",
+      "contactCountry",
+      "contactMethod",
+      "contactName",
+      "headquartersCountry",
+      "industry",
+      "jobTitle",
+      "legitimateNeed",
+      "linkedin",
+      "noScraping",
+      "operatingRegions",
+      "organizationDescription",
+      "organizationName",
+      "organizationSize",
+      "organizationType",
+      "organizationWebsite",
+      "phone",
+      "source",
+      "timezone",
+      "verification"
+    ],
+    "submitDestinations": [
+      "/find-talent/need"
+    ]
+  },
+  {
+    "component": "TalentRequestNeedPage",
+    "category": "talent",
+    "fields": [
+      "accountableLeader",
+      "businessObjective",
+      "capabilityGaps",
+      "desiredOutcomes",
+      "discoveryMethods",
+      "problemOrOpportunity",
+      "quantity",
+      "requestTitle",
+      "requestType",
+      "responsibilities",
+      "stakeholders",
+      "whyNow"
+    ],
+    "submitDestinations": [
+      "/find-talent/qualifications"
+    ]
+  },
+  {
+    "component": "TalentRequestQualificationsPage",
+    "category": "talent",
+    "fields": [
+      "credentials",
+      "domainExperience",
+      "evaluationGuidance",
+      "evaluationMethods",
+      "expertiseAreas",
+      "fairCriteriaConfirmation",
+      "languages",
+      "minimumExperience",
+      "preferredSkills",
+      "primaryExpertise",
+      "requiredSkills",
+      "seniority",
+      "teamComposition",
+      "workAuthorization",
+      "workSample"
+    ],
+    "submitDestinations": [
+      "/find-talent/logistics"
+    ]
+  },
+  {
+    "component": "TalentRequestLogisticsPage",
+    "category": "talent",
+    "fields": [
+      "additionalConsideration",
+      "additionalLogistics",
+      "budgetBasis",
+      "currency",
+      "decisionTimeline",
+      "desiredStartDate",
+      "duration",
+      "engagementModels",
+      "flexibilityAreas",
+      "locationDetails",
+      "maximumBudget",
+      "minimumBudget",
+      "timezoneAlignment",
+      "travelRequirements",
+      "urgency",
+      "weeklyCommitment",
+      "workArrangement"
+    ],
+    "submitDestinations": [
+      "/find-talent/privacy"
+    ]
+  },
+  {
+    "component": "TalentRequestPrivacyPage",
+    "category": "talent",
+    "fields": [
+      "authorizedRecipients",
+      "candidateConsent",
+      "candidatePrivacyConfirmation",
+      "confidentialInformationConfirmation",
+      "confidentialityRequirement",
+      "initialCommunication",
+      "matchingMethods",
+      "organizationDisclosure",
+      "privacyInstructions",
+      "profileDelivery",
+      "requestVisibility",
+      "shareableDetails",
+      "sharingAuthorization"
+    ],
+    "submitDestinations": [
+      "/find-talent/review"
+    ]
+  },
+  {
+    "component": "TalentRequestReviewPage",
+    "category": "talent",
+    "fields": [
+      "accurate",
+      "authorized",
+      "candidateUse",
+      "contact",
+      "lawfulCriteria",
+      "noGuarantee",
+      "policies",
+      "protectedInformation",
+      "separateAgreements"
+    ],
+    "submitDestinations": [
+      "/find-talent/confirmation"
+    ]
+  },
+  {
+    "component": "PartnershipInquiryContactPage",
+    "category": "partners",
+    "fields": [
+      "authorityConfirmation",
+      "communicationMethod",
+      "contactPermission",
+      "decisionRole",
+      "email",
+      "firstName",
+      "headquartersCountry",
+      "headquartersLocation",
+      "industry",
+      "jobTitle",
+      "lastName",
+      "operatingRegions",
+      "organizationDescription",
+      "organizationName",
+      "organizationSize",
+      "organizationType",
+      "phone",
+      "referralSource",
+      "website"
+    ],
+    "submitDestinations": [
+      "/partner-inquiry/contribution"
+    ]
+  },
+  {
+    "component": "PartnershipInquiryContributionPage",
+    "category": "partners",
+    "fields": [
+      "dataContribution",
+      "expertiseContribution",
+      "financialContribution",
+      "limitations",
+      "networkReach",
+      "opportunityDetails",
+      "opportunityPathway",
+      "organizationValue",
+      "participantValue",
+      "partnershipCategories",
+      "potentialContributions",
+      "primaryObjective",
+      "problemOrOpportunity",
+      "recommendationRequest",
+      "structurePreference",
+      "successMeasures",
+      "technologyContribution"
+    ],
+    "submitDestinations": [
+      "/partner-inquiry/sponsorship"
+    ]
+  },
+  {
+    "component": "PartnershipInquirySponsorshipPage",
+    "category": "partners",
+    "fields": [
+      "brandingPreferences",
+      "challengeModels",
+      "challengeStructure",
+      "challengeTheme",
+      "designSupport",
+      "desiredDeliverable",
+      "evaluationInvolvement",
+      "geographicScope",
+      "independenceAcknowledgment",
+      "outcomePathways",
+      "participantGroups",
+      "recognitionPreference",
+      "sponsorResources",
+      "sponsorSupport",
+      "sponsorshipBudget",
+      "sponsorshipConstraints",
+      "sponsorshipCurrency",
+      "sponsorshipInterest"
+    ],
+    "submitDestinations": [
+      "/partner-inquiry/focus"
+    ]
+  },
+  {
+    "component": "PartnershipInquiryFocusPage",
+    "category": "partners",
+    "fields": [
+      "accessibilityNeeds",
+      "audienceRecommendation",
+      "exclusions",
+      "existingRelationships",
+      "fairAudienceConfirmation",
+      "geographicFocus",
+      "geographicRationale",
+      "industries",
+      "innovationAreas",
+      "languageRequirements",
+      "limitations",
+      "networks",
+      "participantBackgrounds",
+      "participantCommunities",
+      "participationFormat",
+      "priorityCommunities",
+      "priorityGeographies"
+    ],
+    "submitDestinations": [
+      "/partner-inquiry/timeline"
+    ]
+  },
+  {
+    "component": "PartnershipInquiryTimelinePage",
+    "category": "partners",
+    "fields": [
+      "accountableLeader",
+      "additionalReadiness",
+      "approvalProcess",
+      "budgetCurrency",
+      "budgetDetails",
+      "budgetRange",
+      "contractingReadiness",
+      "contributionStructure",
+      "flexibleAreas",
+      "fundingStatus",
+      "internalSupport",
+      "keyMilestones",
+      "paymentReadiness",
+      "planningStage",
+      "planningTimeline",
+      "preferredStartDate",
+      "relationshipDuration",
+      "requiredApprovals",
+      "risksAndDependencies",
+      "startDateFlexibility"
+    ],
+    "submitDestinations": [
+      "/partner-inquiry/privacy"
+    ]
+  },
+  {
+    "component": "PartnershipInquiryPrivacyPage",
+    "category": "partners",
+    "fields": [
+      "additionalInstructions",
+      "authorizedRecipients",
+      "authorizedUses",
+      "brandAcknowledgment",
+      "brandPermission",
+      "communicationProcess",
+      "confidentialityRequirement",
+      "informationRestrictions",
+      "inquiryVisibility",
+      "meetingPreference",
+      "organizationDisclosure",
+      "participantDataAcknowledgment",
+      "partnershipContactPermission",
+      "protectedInformationConfirmation",
+      "publicRecognition",
+      "shareableInformation"
+    ],
+    "submitDestinations": [
+      "/partner-inquiry/review"
+    ]
+  },
+  {
+    "component": "PartnershipInquiryReviewPage",
+    "category": "partners",
+    "fields": [
+      "accurate",
+      "authorized",
+      "brandPermissions",
+      "contact",
+      "independence",
+      "noGuarantee",
+      "participantPrivacy",
+      "policies",
+      "preliminary",
+      "protectedInformation",
+      "separateAgreements"
+    ],
+    "submitDestinations": [
+      "/partner-inquiry/confirmation"
+    ]
+  },
+  {
+    "component": "ContactPage",
+    "category": "general",
+    "fields": [
+      "communicationMethod",
+      "contactPermission",
+      "email",
+      "firstName",
+      "lastName",
+      "message",
+      "organization",
+      "phone",
+      "policies",
+      "region",
+      "subject",
+      "type"
+    ],
+    "submitDestinations": [
+      "/contact/confirmation"
+    ]
+  }
+]
