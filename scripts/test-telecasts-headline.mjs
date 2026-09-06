@@ -33,8 +33,8 @@ try{
     assert.equal(await link.getAttribute('href'),video.watchUrl);assert.equal(await link.getAttribute('target'),'_blank');assert.match(await link.getAttribute('rel'),/noopener/);
     await card.getByRole('button',{name:`Load ${video.title} player`,exact:true}).click();const frame=card.locator('iframe');await frame.waitFor();
     assert.equal(await frame.getAttribute('src'),video.embedUrl);assert.equal(await frame.getAttribute('referrerpolicy'),'strict-origin-when-cross-origin');assert.equal(await link.isVisible(),true);
-    const fb=await frame.boundingBox();assert.ok(fb&&fb.width>=200&&fb.height>=200);
-    report.videos.push({width,id:video.id,watchUrl:video.watchUrl,embedUrl:video.embedUrl,loadsOnClick:true,directLinkVisible:true,frameBounds:fb});
+    const fb=await frame.boundingBox();const cb=await card.boundingBox();assert.ok(fb&&cb&&fb.width>=200&&fb.height>=200&&fb.width<=cb.width&&fb.x>=0&&fb.x+fb.width<=width+1);
+    report.videos.push({width,id:video.id,watchUrl:video.watchUrl,embedUrl:video.embedUrl,loadsOnClick:true,directLinkVisible:true,containedInCard:true,frameBounds:fb});
   }
   await context.close();
  }

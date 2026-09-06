@@ -6,9 +6,11 @@
 }
 .home-page .hero h1 > span { white-space: nowrap; }
 
+.event-telecasts { min-width: 0; }
 .event-telecasts .telecast-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .event-telecasts .telecast-card { min-width: 0; border: 1px solid #d7e2e8; background: #fff; }
-.event-telecasts .telecast-player { position: relative; aspect-ratio: 16 / 9; min-height: 200px; background: #102c3d; }
+/* Definite width lets the 200px player minimum override height, never card width. */
+.event-telecasts .telecast-player { position: relative; width: 100%; max-width: 100%; min-width: 0; aspect-ratio: 16 / 9; min-height: 200px; background: #102c3d; }
 .event-telecasts .telecast-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .event-telecasts .telecast-load { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 24px; background: #102c3d; color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
 .event-telecasts .telecast-load:hover { background: #173d51; }
