@@ -6,6 +6,6 @@ Each card now renders a genuine thumbnail as an ordinary same-origin image befor
 
 The complete thumbnail/button area loads the existing iframe on click or keyboard activation. Playback is not automatic. The original Open on YouTube links remain visible, including t=7s for fYOiJnL4Ars and the matching start=7 embed parameter. No player or third-party image request occurs before activation. If an image is unavailable, the load control and direct link still work.
 
-Existing page layout, Home headline, image assets, popup, LinkedIn configuration and all database/form behavior remain unchanged. This update does not replace the separately approved edited prize photographs; those remain in the previously supplied branding-update package for the developer.
+Existing page layout, Home headline, popup, LinkedIn configuration and all database/form behavior remain unchanged. The separately approved prize-photo display edits are integrated in the subsequent update documented in PHOTO-BRANDING-UPDATE.md; the two video posters and playback configuration are preserved.
 
 Tests cover initial pictures and absence of iframes/YouTube requests, five desktop/mobile sizes, keyboard activation, preserved links, player containment, JavaScript-disabled previews, image failure and the Home popup. These are component/browser checks, not certification of YouTube stream playback or a Hostinger deployment.
