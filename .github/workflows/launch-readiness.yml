@@ -1,0 +1,48 @@
+name: StartupFair pre-launch evidence (read-only audit)
+on:
+  push:
+    branches: [audit/launch-readiness-20260906]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked site and isolated audit tools
+        run: |
+          npm ci
+          npm install --prefix /tmp/sf-launch-tools --no-audit --no-fund playwright@1.58.2 axe-core@4.10.3
+          /tmp/sf-launch-tools/node_modules/.bin/playwright install --with-deps chromium
+      - name: Browser functional, typography and accessibility evidence
+        run: |
+          mkdir -p launch-audit
+          bash scripts/codespaces-start.sh
+          node scripts/launch-readiness-audit.mjs > launch-audit/browser-summary.log 2>&1
+      - name: Test the actual production build command and retain its result
+        if: always()
+        run: |
+          mkdir -p launch-audit
+          set +e
+          timeout 240 npm run build > launch-audit/production-build.log 2>&1
+          echo $? > launch-audit/production-build.exit
+          npx tsc --noEmit > launch-audit/typecheck.log 2>&1
+          echo $? > launch-audit/typecheck.exit
+          exit 0
+      - name: Retain evidence, not real submission data
+        if: always()
+        run: |
+          git rev-parse HEAD > launch-audit/audit-commit.txt
+          cp /tmp/startupfair-vite.log launch-audit/server.log 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: startupfair-prelaunch-audit
+          path: launch-audit
+          retention-days: 14
