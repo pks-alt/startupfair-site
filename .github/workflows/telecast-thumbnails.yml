@@ -1,0 +1,62 @@
+name: Verify visible event telecast thumbnails
+on:
+  push:
+    branches: [review/telecast-thumbnails-20260906]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: startupfair-telecast-thumbnails
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Preserve genuine same-origin thumbnail assets
+        run: |
+          mkdir -p telecast-evidence
+          python3 scripts/cache-telecast-posters.py
+      - name: Install locked application and isolated browser tools
+        run: |
+          npm ci
+          npm install --prefix /tmp/sf-poster-tools --no-audit --no-fund playwright@1.58.2
+          /tmp/sf-poster-tools/node_modules/.bin/playwright install --with-deps chromium
+      - name: Build and confirm existing email routing
+        run: |
+          npm run build > telecast-evidence/build.log 2>&1
+          node --experimental-strip-types --test tests/email-routing.test.mjs > telecast-evidence/email-tests.log 2>&1
+      - name: Verify initial images and unchanged click-to-load behavior
+        run: |
+          bash scripts/codespaces-start.sh
+          node --experimental-strip-types scripts/verify-telecast-posters.mjs
+      - name: Commit validated binary assets on the isolated branch only
+        run: |
+          set -euo pipefail
+          git diff --exit-code -- components/startupfair-page.tsx components/ui/dialog.tsx app/globals.css app/home-review.css app/inquiry-fix.css public/history public/startupfair-hero-global-ai.png public/startupfair-logo.png lib/seo-config.ts package.json package-lock.json
+          git add public/telecast-posters docs/telecast-poster-provenance.json
+          if ! git diff --cached --quiet; then
+            git config user.name 'StartupFair Verification'
+            git config user.email 'actions@users.noreply.github.com'
+            git commit -m 'Include verified YouTube thumbnail images for initial card display'
+            git push origin HEAD:review/telecast-thumbnails-20260906
+          fi
+          git rev-parse HEAD > telecast-evidence/verified-commit.txt
+          git archive --format=zip HEAD > telecast-evidence/verified-source.zip
+      - name: Retain diagnostic evidence
+        if: always()
+        run: |
+          mkdir -p telecast-evidence
+          cp /tmp/startupfair-vite.log telecast-evidence/server.log 2>/dev/null || true
+          cp docs/telecast-poster-provenance.json telecast-evidence/ 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: startupfair-telecast-thumbnails
+          path: telecast-evidence
+          retention-days: 14

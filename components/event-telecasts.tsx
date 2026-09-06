@@ -26,11 +26,21 @@ function TelecastCard({ video }: { video: Telecast }) {
             onClick={() => setLoaded(true)}
             aria-label={`Load ${video.title} player`}
           >
-            <svg viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false">
-              <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" strokeWidth="2" />
-              <path d="M20 15 L34 24 L20 33 Z" fill="currentColor" />
-            </svg>
-            <span>Load video</span>
+            <img
+              className="telecast-poster"
+              src={video.posterUrl}
+              alt=""
+              loading="eager"
+              decoding="async"
+              onError={(event) => { event.currentTarget.hidden = true; }}
+            />
+            <span className="telecast-play-overlay" aria-hidden="true">
+              <svg viewBox="0 0 48 48" width="48" height="48" focusable="false">
+                <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" strokeWidth="2" />
+                <path d="M20 15 L34 24 L20 33 Z" fill="currentColor" />
+              </svg>
+              <span>Load video</span>
+            </span>
           </button>
         )}
       </div>
@@ -58,8 +68,9 @@ export function EventTelecasts() {
         {EVENT_TELECASTS.map(video => <TelecastCard key={video.id} video={video} />)}
       </div>
       <p className="telecast-help">
-        Select Load video to connect to YouTube. No YouTube player loads before you select it.
-        If a recording cannot play here, use Open on YouTube. YouTube’s privacy terms apply when its player loads.
+        Select a preview to load the YouTube player. Preview images are served by StartupFair;
+        no YouTube player loads until you select one. If a recording cannot play here,
+        use Open on YouTube. YouTube’s privacy terms apply when its player loads.
       </p>
     </div>
   );
