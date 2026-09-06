@@ -1,0 +1,20 @@
+name: StartupFair Site Review
+on:
+  push:
+    branches: [site-template-database-review]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preserve source snapshot
+        run: git archive --format=zip -o /tmp/startupfair-review-source.zip HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: startupfair-review-source
+          path: /tmp/startupfair-review-source.zip
+          retention-days: 7
