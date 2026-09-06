@@ -28,8 +28,10 @@ jobs:
         run: |
           bash scripts/codespaces-start.sh
           node scripts/review-browser.mjs before
-      - name: Apply source-guarded template review
-        run: python3 scripts/apply-template-review.py
+      - name: Apply source-guarded template review and preserve archive photographs
+        run: |
+          python3 scripts/apply-template-review.py
+          python3 scripts/cache-historical-images.py
       - name: Verify all email routes and database constraints
         run: |
           node --experimental-strip-types --test tests/email-routing.test.mjs
@@ -42,10 +44,10 @@ jobs:
         run: |
           cmp review-evidence/before/home-1440.png review-evidence/after/home-1440.png
           cmp review-evidence/before/home-390.png review-evidence/after/home-390.png
-          git diff --exit-code -- app/globals.css app/home-review.css app/inquiry-fix.css components/ui/dialog.tsx public
+          git diff --exit-code -- app/globals.css app/home-review.css app/inquiry-fix.css components/ui/dialog.tsx public/startupfair-hero-global-ai.png public/startupfair-logo.png
       - name: Commit verified changes to review branch only
         run: |
-          git add components/startupfair-page.tsx app/layout.tsx app/about-history.css docs/form-field-inventory.json
+          git add components/startupfair-page.tsx app/layout.tsx app/about-history.css docs/form-field-inventory.json docs/historical-image-manifest.json public/history
           if ! git diff --cached --quiet; then
             git config user.name 'StartupFair Review'
             git config user.email 'actions@users.noreply.github.com'
@@ -54,12 +56,13 @@ jobs:
           fi
       - name: Preserve source snapshot
         if: always()
-        run: git archive --format=zip -o /tmp/startupfair-review-source.zip HEAD
+        run: |
+          mkdir -p review-evidence
+          git archive --format=zip -o review-evidence/startupfair-review-source.zip HEAD
+          cp docs/historical-image-manifest.json review-evidence/ 2>/dev/null || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: startupfair-review-evidence
-          path: |
-            review-evidence
-            /tmp/startupfair-review-source.zip
+          path: review-evidence
           retention-days: 7

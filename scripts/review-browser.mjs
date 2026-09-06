@@ -8,12 +8,18 @@ const primary=['/','/challenges','/for-talent','/for-organizations','/partners',
 const results={mode,viewports:[],routes:[],modal:[],failures:[],notes:[]};
 const allLinks=new Set();
 const expect=(condition,message)=>{if(!condition)results.failures.push(message)};
+async function ready(page,path){
+ await page.goto(base+path,{waitUntil:'domcontentloaded'});
+ await page.locator('h1').first().waitFor();await page.evaluate(()=>document.fonts.ready);
+ // Bound resource waiting and report actual unloaded images, rather than a generic networkidle timeout.
+ await page.waitForFunction(()=>[...document.images].every(i=>i.complete),{},{timeout:12000}).catch(()=>{});
+ await page.waitForTimeout(150);
+}
 for(const width of [1440,390,768,1024]){
  const context=await browser.newContext({viewport:{width,height:900}});
  const page=await context.newPage();
  for(const path of primary){
-  await page.goto(base+path,{waitUntil:'networkidle'});
-  await page.locator('h1').first().waitFor();await page.evaluate(()=>document.fonts.ready);
+  await ready(page,path);
   const metrics=await page.evaluate(()=>({title:document.querySelector('h1')?.innerText,headers:document.querySelectorAll('.site-header').length,footers:document.querySelectorAll('footer').length,overflow:document.documentElement.scrollWidth>innerWidth+1,sections:[...document.querySelectorAll('main section')].map(s=>({title:s.querySelector('h1,h2')?.textContent,padding:getComputedStyle(s).paddingTop})),images:[...document.images].map(i=>({src:i.getAttribute('src'),loaded:i.complete&&i.naturalWidth>0})),heroImage:document.querySelector('.hero-art>img')?.getAttribute('src'),links:[...document.querySelectorAll('a[href]')].map(a=>a.getAttribute('href'))}));
   results.viewports.push({width,path,...metrics});
   expect(!metrics.overflow,`${path} horizontal overflow at ${width}`);
@@ -23,7 +29,7 @@ for(const width of [1440,390,768,1024]){
   for(const href of metrics.links)if(href?.startsWith('/')&&!href.startsWith('//'))allLinks.add(href.split('#')[0]);
   if(width===1440||width===390)await page.screenshot({path:`${out}/${path==='/'?'home':path.slice(1)}-${width}.png`,fullPage:true});
  }
- await page.goto(base,{waitUntil:'networkidle'});
+ await ready(page,'/');
  await page.getByRole('button',{name:'Start a Conversation',exact:true}).click();
  const dialog=page.getByRole('dialog');await dialog.waitFor({state:'visible'});
  const box=await dialog.boundingBox();const bg=await dialog.evaluate(e=>getComputedStyle(e).backgroundColor);
