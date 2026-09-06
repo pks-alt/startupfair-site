@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { EventTelecasts } from "@/components/event-telecasts";
 import { EmailRoutingForm, EmailRecipientNotice } from "@/components/email-routing-form";
 import { INQUIRY_OPTIONS } from "@/lib/email-routing";
 import { useState, type ReactNode } from "react";
@@ -4571,6 +4572,15 @@ function AboutPage() {
             <p>Historical photographs, event references and past collaborations are shown as part of StartupFair’s archive. They do not imply a current partnership, sponsorship or client relationship.</p>
             <a href="https://www.startupfair.org/lunchbox-gallery.html" target="_blank" rel="noreferrer">View Historical Archive →</a>
           </div>
+        </Section>
+
+        <Section
+          id="event-telecasts"
+          eyebrow="Event Telecasts"
+          title="Watch earlier StartupFair events."
+          intro="Recordings from StartupFair’s historical event archive."
+        >
+          <EventTelecasts />
         </Section>
 
         <CTA
