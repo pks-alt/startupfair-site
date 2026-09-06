@@ -1,0 +1,63 @@
+name: StartupFair SEO and LinkedIn verification
+on:
+  push:
+    branches: [review/seo-linkedin-20260906]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: startupfair-seo-linkedin
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Apply exact SEO and LinkedIn integration
+        run: |
+          mkdir -p seo-evidence
+          if ! grep -q 'LinkedInLink' components/startupfair-page.tsx; then python3 scripts/apply-seo-linkedin.py; fi
+      - name: Install unchanged site and isolated browser tools
+        run: |
+          npm ci
+          npm install --prefix /tmp/sf-seo-tools --no-audit --no-fund playwright@1.58.2 tsx@4.20.6
+          /tmp/sf-seo-tools/node_modules/.bin/playwright install --with-deps chromium
+      - name: Unit tests and production build
+        run: |
+          /tmp/sf-seo-tools/node_modules/.bin/tsx --test tests/seo-config.test.mjs > seo-evidence/seo-unit-tests.log 2>&1
+          node --experimental-strip-types --test tests/email-routing.test.mjs > seo-evidence/email-tests.log 2>&1
+          npm run build > seo-evidence/build.log 2>&1
+      - name: Validate rendered SEO and actual links
+        run: |
+          bash scripts/codespaces-start.sh
+          node scripts/verify-seo-linkedin.mjs
+      - name: Preserve unchanged presentation and record verified source
+        run: |
+          set -euo pipefail
+          git diff --exit-code -- app/globals.css app/home-review.css app/inquiry-fix.css app/launch-polish.css components/event-telecasts.tsx components/ui/dialog.tsx public lib/email-routing.ts lib/event-telecasts.ts package.json package-lock.json
+          git add components/startupfair-page.tsx app/layout.tsx app/page.tsx 'app/[...slug]/page.tsx' lib/site-routes.ts
+          if ! git diff --cached --quiet; then
+            git config user.name 'StartupFair Verification'
+            git config user.email 'actions@users.noreply.github.com'
+            git commit -m 'Integrate tested per-page SEO and LinkedIn-only marketing links'
+            git push origin HEAD:review/seo-linkedin-20260906
+          fi
+          git rev-parse HEAD > seo-evidence/verified-commit.txt
+          git archive --format=zip HEAD > seo-evidence/verified-source.zip
+      - name: Preserve audit evidence
+        if: always()
+        run: |
+          mkdir -p seo-evidence
+          cp /tmp/startupfair-vite.log seo-evidence/server.log 2>/dev/null || true
+          cp docs/SEO-LINKEDIN-IMPLEMENTATION.md seo-evidence/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: startupfair-seo-linkedin-review
+          path: seo-evidence
+          retention-days: 14
