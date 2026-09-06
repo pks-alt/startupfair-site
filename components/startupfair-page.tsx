@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { LinkedInLink } from "@/components/linkedin-link";
 import { EventTelecasts } from "@/components/event-telecasts";
 import { EmailRoutingForm, EmailRecipientNotice } from "@/components/email-routing-form";
 import { INQUIRY_OPTIONS } from "@/lib/email-routing";
@@ -128,6 +129,7 @@ function Footer() {
         <address>2205 152nd Ave NE<br />Redmond, WA 98052</address>
         <a href="tel:+14258294463">(425) 829-4463</a>
         <a href="mailto:hello@startupfair.org">hello@startupfair.org</a>
+        <LinkedInLink />
       </div>
       <div className="footer-bottom"><span>Established in 2015</span><span>© 2026 StartupFair. All rights reserved.</span></div>
     </footer>
@@ -2250,7 +2252,7 @@ function TalentProfileContactPage() {
           <label>Preferred contact method<select required name="contactMethod" defaultValue=""><option value="" disabled>Select one</option><option>Email</option><option>Phone</option><option>Text message</option></select></label>
           <label>LinkedIn profile <small>(optional)</small><input type="url" name="linkedin" placeholder="https://" /></label>
           <label>Personal or professional website <small>(optional)</small><input type="url" name="website" placeholder="https://" /></label>
-          <label className="wide">How did you hear about StartupFair?<select required name="source" defaultValue=""><option value="" disabled>Select one</option><option>Search engine</option><option>LinkedIn or social media</option><option>University or college</option><option>Employer or professional organization</option><option>Friend, colleague, or referral</option><option>StartupFair event or prior relationship</option><option>Other</option></select></label>
+          <label className="wide">How did you hear about StartupFair?<select required name="source" defaultValue=""><option value="" disabled>Select one</option><option>Search engine</option><option>LinkedIn</option><option>University or college</option><option>Employer or professional organization</option><option>Friend, colleague, or referral</option><option>StartupFair event or prior relationship</option><option>Other</option></select></label>
           <fieldset className="wide application-fieldset">
             <legend>Communication permissions</legend>
             <label className="check wide"><input required type="checkbox" name="profileContactConsent" />StartupFair may contact me about my profile, selected challenges, and profile-related updates.</label>
@@ -2854,7 +2856,7 @@ function ChallengeProposalContactPage() {
           <label>Headquarters country<input required autoComplete="country-name" name="headquartersCountry" /></label>
           <label className="wide">Countries or regions of operation <small>(maximum 700 characters)</small><textarea required maxLength={700} name="operatingRegions" rows={4} /></label>
           <label className="wide">Brief organization description <small>(maximum 1,000 characters)</small><textarea required maxLength={1000} name="organizationDescription" rows={5} placeholder="Describe the organization’s purpose, primary products or services, customers, and relevant operations." /></label>
-          <label className="wide">How did you hear about StartupFair?<select required name="source" defaultValue=""><option value="" disabled>Select one</option><option>Search engine</option><option>LinkedIn or social media</option><option>University or research network</option><option>Professional organization or event</option><option>Referral or prior relationship</option><option>Other</option></select></label>
+          <label className="wide">How did you hear about StartupFair?<select required name="source" defaultValue=""><option value="" disabled>Select one</option><option>Search engine</option><option>LinkedIn</option><option>University or research network</option><option>Professional organization or event</option><option>Referral or prior relationship</option><option>Other</option></select></label>
           <label className="wide check"><input required type="checkbox" name="authority" />I am authorized to submit this proposal and discuss a potential challenge on behalf of the organization.</label>
           <div className="wide actions">
             <button className="button primary" type="submit">Continue</button>
@@ -3270,7 +3272,7 @@ function TalentRequestContactPage() {
           <label>Headquarters country<input required autoComplete="country-name" name="headquartersCountry" /></label>
           <label className="wide">Countries or regions of operation <small>(maximum 700 characters)</small><textarea required maxLength={700} name="operatingRegions" rows={4} /></label>
           <label className="wide">Brief organization description <small>(maximum 1,000 characters)</small><textarea required maxLength={1000} name="organizationDescription" rows={5} placeholder="Describe the organization’s purpose, primary products or services, customers, and relevant operations." /></label>
-          <label className="wide">How did you hear about StartupFair?<select required name="source" defaultValue=""><option value="" disabled>Select one</option><option>Search engine</option><option>LinkedIn or social media</option><option>Professional organization or event</option><option>University or research network</option><option>Referral or prior relationship</option><option>Other</option></select></label>
+          <label className="wide">How did you hear about StartupFair?<select required name="source" defaultValue=""><option value="" disabled>Select one</option><option>Search engine</option><option>LinkedIn</option><option>Professional organization or event</option><option>University or research network</option><option>Referral or prior relationship</option><option>Other</option></select></label>
           <fieldset className="wide application-fieldset">
             <legend>Required confirmations</legend>
             <label className="check wide"><input required type="checkbox" name="authority" />I am authorized to submit this request and discuss the organization’s role, project, or talent need.</label>
@@ -3823,7 +3825,7 @@ function PartnershipInquiryContactPage() {
           <label>Phone number<input required type="tel" name="phone" /></label>
           <label>Preferred communication method<select required name="communicationMethod" defaultValue=""><option value="" disabled>Select one</option><option>Email</option><option>Phone</option><option>Video meeting</option><option>Email first, then schedule a meeting</option></select></label>
           <label className="wide">Role in partnership decisions <small>(maximum 750 characters)</small><textarea required maxLength={750} name="decisionRole" rows={4} placeholder="Explain your authority or involvement in evaluating and approving the proposed partnership." /></label>
-          <label>How did you hear about StartupFair?<select required name="referralSource" defaultValue=""><option value="" disabled>Select one</option><option>StartupFair website or previous event</option><option>Professional referral</option><option>LinkedIn or social media</option><option>University or educational institution</option><option>Industry event or community</option><option>Search engine</option><option>Existing StartupFair relationship</option><option>Other</option></select></label>
+          <label>How did you hear about StartupFair?<select required name="referralSource" defaultValue=""><option value="" disabled>Select one</option><option>StartupFair website or previous event</option><option>Professional referral</option><option>LinkedIn</option><option>University or educational institution</option><option>Industry event or community</option><option>Search engine</option><option>Existing StartupFair relationship</option><option>Other</option></select></label>
           <label>May StartupFair contact you about this inquiry?<select required name="contactPermission" defaultValue=""><option value="" disabled>Select one</option><option>Yes, by my preferred method</option><option>Yes, by email only</option><option>Yes, but please schedule in advance</option></select></label>
           <label className="wide check"><input required type="checkbox" name="authorityConfirmation" />I confirm that I am authorized to submit this inquiry or have permission to explore a potential partnership on behalf of the named organization.</label>
           <div className="wide actions">
@@ -4869,7 +4871,7 @@ function NotFoundPage() {
         <div className="status">404</div>
         <span className="eyebrow">Page not found</span>
         <h1>Let’s Get You Back on Track.</h1>
-        <p>The requested page is not available in this prototype.</p>
+        <p>The requested page could not be found.</p>
         <div className="actions">
           <Link className="button primary" href="/">
             Return Home

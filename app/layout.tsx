@@ -9,15 +9,10 @@ import "./review-gallery.css";
 import "./launch-polish.css";
 
 export const metadata: Metadata = {
-  title: "StartupFair — AI Talent & Open Innovation",
-  description: "Click-through website prototype for StartupFair.",
-  other: {
-    "codex-preview": "development",
-  },
-  icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-  },
+  title: "StartupFair | AI Talent & Innovation Challenges",
+  description: "Explore practical AI talent and innovation challenges with StartupFair.",
+  robots: { index: false, follow: false },
+  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
 };
 
 export default function RootLayout({
