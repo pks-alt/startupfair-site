@@ -11,7 +11,8 @@ for(const width of [1440,390]){
   await page.goto(base,{waitUntil:'networkidle'});
   if(width===390)await page.getByRole('button',{name:'Open navigation menu'}).click();
   const nav=width===390?page.locator('#mobile-navigation'):page.locator('.site-header nav').first();
-  await nav.locator(`a[href="${path}"]`).click();
+  // The menu also has a Join a Challenge CTA to the same URL; use the nav link.
+  await nav.locator(`a[href="${path}"]`).first().click();
   await page.waitForURL(base+path);await page.locator('h1').first().waitFor();
   assert.doesNotMatch(await page.locator('h1').first().innerText(),/Get You Back on Track/);
   report.push({width,action:'navigation-click',path,pass:true});
