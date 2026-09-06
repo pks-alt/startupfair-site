@@ -4558,7 +4558,7 @@ function AboutPage() {
               <span><small>2016 · Startup Hall</small><strong>LunchBox Pitch & Win</strong></span>
             </a>
             <a className="about-history-photo" href="https://www.startupfair.org/lunchbox-gallery.html" target="_blank" rel="noreferrer">
-              <img src="/history/homeslide2.png" alt="StartupFair Pitch and Win event winners holding award checks" />
+              <img src="/history/homeslide2-branding-edited.png" alt="StartupFair Pitch and Win event winners holding award checks" />
               <span><small>2015 · Seattle</small><strong>Pitch Competition</strong></span>
             </a>
             <a className="about-history-photo" href="https://www.startupfair.org/lunchbox-gallery.html" target="_blank" rel="noreferrer">
@@ -4566,7 +4566,7 @@ function AboutPage() {
               <span><small>Historical Archive</small><strong>Community & Connections</strong></span>
             </a>
             <a className="about-history-photo" href="https://www.startupfair.org/lunchbox-15-september-gallery.html" target="_blank" rel="noreferrer">
-              <img src="/history/29.jpg" alt="StartupFair inaugural LunchBox event winner presentation in September 2015" />
+              <img src="/history/september-2015-branding-edited.png" alt="StartupFair inaugural LunchBox event winner presentation in September 2015" />
               <span><small>September 2015</small><strong>Inaugural LunchBox</strong></span>
             </a>
           </div>
