@@ -4,38 +4,62 @@ on:
     branches: [review/site-template-database]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: startupfair-site-review
   cancel-in-progress: true
 jobs:
   audit:
+    if: github.ref == 'refs/heads/review/site-template-database'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
-      - name: Preserve exact checked-out source for review
+      - name: Prepare evidence folder and apply hash-checked review patch
         run: |
           mkdir -p review-artifacts
-          git archive --format=zip HEAD > review-artifacts/source.zip
+          python3 scripts/apply-site-review.py
+      - name: Preserve real historical images from approved archive
+        run: python3 scripts/cache-historical-assets.py
       - name: Install locked site dependencies
         run: npm ci
+      - name: Generate a migration without connecting to any live database
+        run: npx drizzle-kit generate --name=startupfair_foundation
+      - name: Verify reference schema, generated migration and departmental routing
+        run: |
+          node --test tests/database-schema.test.mjs
+          node --experimental-strip-types --test tests/email-routing.test.mjs
       - name: Install browser audit tools without changing the lockfile
         run: |
           npm install --no-save --package-lock=false playwright@1.58.2
           npx playwright install --with-deps chromium
-      - name: Validate database structure when present
-        run: |
-          if [ -f tests/database-schema.test.mjs ]; then node --test tests/database-schema.test.mjs; fi
       - name: Start the source site
         run: bash scripts/codespaces-start.sh
-      - name: Review every public page, route, image, mobile menu and popup
+      - name: Review all page addresses at desktop and mobile sizes, images and popup
         run: node scripts/site-audit.mjs
-      - name: Retain review evidence
+      - name: Commit only verified implementation on the isolated review branch
+        run: |
+          set -euo pipefail
+          git diff --exit-code -- app/globals.css app/home-review.css app/inquiry-fix.css components/ui/dialog.tsx components/email-routing-form.tsx lib/email-routing.ts public/startupfair-hero-global-ai.png public/startupfair-logo.png package.json package-lock.json .openai/hosting.json
+          git add app/about-approved.css app/public-template.css app/layout.tsx components/startupfair-page.tsx db/schema.ts db/foundation-reference.sql docs/DATABASE-IMPLEMENTATION.md docs/SITE-REVIEW-IMPLEMENTED.md docs/HISTORICAL-IMAGE-PROVENANCE.json scripts/apply-email-routing.py scripts/cache-historical-assets.py scripts/historical-assets.json scripts/site-audit.mjs tests/database-schema.test.mjs tests/email-routing.test.mjs public/historical drizzle
+          if ! git diff --cached --quiet; then
+            git config user.name 'StartupFair Review'
+            git config user.email 'actions@users.noreply.github.com'
+            git commit -m 'Restore approved About and four-step profile; align public templates; add tested database foundation'
+            git push origin HEAD:review/site-template-database
+          fi
+          git rev-parse HEAD > review-artifacts/verified-commit.txt
+          git archive --format=zip HEAD > review-artifacts/source.zip
+          echo 'Browser and schema checks passed. Production database and email delivery remain disconnected.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Retain review evidence and startup diagnostics
+        if: always()
+        run: |
+          cp /tmp/startupfair-vite.log review-artifacts/startup.log 2>/dev/null || true
+      - name: Upload review evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
