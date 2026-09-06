@@ -3,8 +3,8 @@ export const SITE_ORIGIN = "https://www.startupfair.org";
 export const SITE_NAME = "StartupFair";
 // Keep false until forms, policies, challenge details and production hosting pass launch review.
 export const SEARCH_LAUNCH_APPROVED: boolean = false;
-// Exact company-page URL has not been supplied/verified. Never substitute a similarly named company.
-export const LINKEDIN_COMPANY_URL: string | null = null;
+// Company page supplied by StartupFair's owner; omit /home/ and member-view parameters.
+export const LINKEDIN_COMPANY_URL: string | null = "https://www.linkedin.com/company/startupfair/";
 export const SOCIAL_CHANNELS = ["linkedin"] as const;
 export const SHARE_IMAGE = {
   path: "/startupfair-hero-global-ai.png",

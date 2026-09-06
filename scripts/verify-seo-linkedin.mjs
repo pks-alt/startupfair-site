@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { chromium } from '/tmp/sf-seo-tools/node_modules/playwright/index.mjs';
 import { writeFileSync, mkdirSync } from 'node:fs';
 const base='http://127.0.0.1:5173';const origin='https://www.startupfair.org';
+const linkedin='https://www.linkedin.com/company/startupfair/';
 mkdirSync('seo-evidence',{recursive:true});
 const report={pages:[],routeChecks:[],robots:null,sitemap:null,footer:[],popups:[],errors:[],externalSocialDiscovery:[]};
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
@@ -18,7 +19,9 @@ try{
   assert.equal(titles.has(m.title),false);titles.add(m.title);
   if(!path.includes('talent-profile')&&!path.includes('confirmation')){assert.equal(m.canonical,origin+path);assert.equal(m.ogImage,origin+'/startupfair-hero-global-ai.png');assert.equal(m.ogTitle,m.title);assert.ok(html.includes('property="og:image"'));assert.equal(descriptions.has(m.description),false);descriptions.add(m.description);}
   else assert.equal(m.canonical,null);
-  assert.equal(m.socialLinks.length,1);assert.ok(m.socialLinks[0].href.startsWith('https://www.linkedin.com/'));report.pages.push({path,...m});
+  assert.equal(m.socialLinks.length,1);assert.equal(m.socialLinks[0].href,linkedin);assert.match(m.socialLinks[0].label,/Follow on LinkedIn/);
+  if(path==='/')assert.deepEqual(m.jsonld.flatMap(x=>x['@graph']??[]).find(x=>x['@type']==='Organization').sameAs,[linkedin]);
+  report.pages.push({path,...m});
  }
  for(const path of ['/not-a-real-page','/challenges/not-a-real-challenge','/challenges/ai-clinician-matching/invalid-extra']){
   const response=await page.goto(base+path,{waitUntil:'networkidle'});const status=response.status();assert.equal(status,404,`${path} must be an actual 404`);report.routeChecks.push({path,status});
@@ -30,12 +33,12 @@ try{
  for(const width of [1440,390]){
   const c=await browser.newContext({viewport:{width,height:900}});const p=await c.newPage();await p.goto(base,{waitUntil:'networkidle'});
   assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
-  const link=p.locator('footer a[data-social-channel="linkedin"]');await link.scrollIntoViewIfNeeded();assert.match(await link.getAttribute('href'),/linkedin.com\/sharing/);
-  await p.locator('footer').screenshot({path:`seo-evidence/footer-${width}.png`});report.footer.push({width,linkedinOnly:true});
+  const link=p.locator('footer a[data-social-channel="linkedin"]');await link.scrollIntoViewIfNeeded();assert.equal(await link.getAttribute('href'),linkedin);assert.match(await link.innerText(),/Follow on LinkedIn/);assert.equal(await link.getAttribute('target'),'_blank');
+  await p.locator('footer').screenshot({path:`seo-evidence/footer-${width}.png`});report.footer.push({width,linkedinOnly:true,companyUrl:linkedin,label:'Follow on LinkedIn'});
   await p.getByRole('button',{name:'Start a Conversation',exact:true}).click();const dialog=p.getByRole('dialog');await dialog.waitFor();await p.keyboard.press('Escape');await dialog.waitFor({state:'hidden'});report.popups.push({width,opensAndCloses:true});
   await p.goto(base+'/about',{waitUntil:'networkidle'});assert.equal(await p.locator('#event-telecasts .telecast-card').count(),2);
   await c.close();
  }
  assert.equal(report.errors.length,0);
- console.log('PASS: unique server-rendered metadata, canonical/OG, noindex gates, valid robots/sitemap, actual 404 responses, LinkedIn-only footer and existing popup/video preservation.');
+ console.log('PASS: owner-supplied Follow on LinkedIn link, Organization sameAs, SEO safeguards, and existing popup/video preservation.');
 }catch(e){report.failure=String(e);throw e;}finally{writeFileSync('seo-evidence/seo-results.json',JSON.stringify(report,null,2));await browser.close();}

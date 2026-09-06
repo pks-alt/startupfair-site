@@ -25,13 +25,15 @@ test('canonical strips campaign tracking and unknown forms get no public canonic
  assert.equal(canonicalFor('/talent-profile/contact?email=private@example.test'),null);
  assert.equal(metadataFor('/contact','localhost').alternates.canonical,SITE_ORIGIN+'/contact');
 });
-test('only LinkedIn marketing; no fabricated company page or account publishing',()=>{
- assert.deepEqual(SOCIAL_CHANNELS,['linkedin']);assert.equal(verifiedLinkedinUrl(),null);
+test('only LinkedIn marketing; company page is the owner-supplied public URL',()=>{
+ assert.deepEqual(SOCIAL_CHANNELS,['linkedin']);assert.equal(verifiedLinkedinUrl(),'https://www.linkedin.com/company/startupfair/');
+ assert.equal(new URL(verifiedLinkedinUrl()).search,'');
  const share=new URL(linkedinShareUrl());assert.equal(share.hostname,'www.linkedin.com');assert.equal(share.searchParams.get('url'),SITE_ORIGIN+'/');
  assert.equal(new URL(linkedinShareUrl('//evil.test')).searchParams.get('url'),SITE_ORIGIN+'/');
 });
-test('structured data does not invent events, ratings, jobs or social accounts',()=>{
- const data=structuredDataFor('/');assert.ok(data);assert.doesNotMatch(JSON.stringify(data),/Event|JobPosting|AggregateRating|sameAs/);
+test('structured data includes only the supplied social account and no invented events or ratings',()=>{
+ const data=structuredDataFor('/');assert.ok(data);assert.doesNotMatch(JSON.stringify(data),/Event|JobPosting|AggregateRating/);
+ assert.deepEqual(data['@graph'].find(item=>item['@type']==='Organization').sameAs,['https://www.linkedin.com/company/startupfair/']);
  assert.equal(structuredDataFor('/talent-profile/contact'),null);assert.equal(structuredDataFor('/challenges/ai-clinician-matching'),null);
  assert.match(robotsText('localhost'),/Allow: \//);assert.doesNotMatch(robotsText('localhost'),/Disallow: \/|Sitemap:/);
 });
