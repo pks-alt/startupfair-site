@@ -1,0 +1,22 @@
+[
+  {
+    "videoId": "fYOiJnL4Ars",
+    "source": "https://i.ytimg.com/vi/fYOiJnL4Ars/maxresdefault.jpg",
+    "localPath": "/telecast-posters/fYOiJnL4Ars.jpg",
+    "width": 1280,
+    "height": 720,
+    "bytes": 68637,
+    "sha256": "67a929cbcf88e71624c11247bc2ae034e53488d842f7eade4d2444c16ddf71d7",
+    "retrievedAt": "2026-09-06T23:00:00.053783+00:00"
+  },
+  {
+    "videoId": "OLXfRG4oYok",
+    "source": "https://i.ytimg.com/vi/OLXfRG4oYok/maxresdefault.jpg",
+    "localPath": "/telecast-posters/OLXfRG4oYok.jpg",
+    "width": 1280,
+    "height": 720,
+    "bytes": 61492,
+    "sha256": "66fb5763b858337817a4a3b1ea86ee2ce76ad95334ad6a37599da74cec6463b7",
+    "retrievedAt": "2026-09-06T23:00:00.046528+00:00"
+  }
+]
