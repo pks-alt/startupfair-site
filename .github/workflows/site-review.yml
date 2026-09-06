@@ -2,19 +2,64 @@ name: StartupFair Site Review
 on:
   push:
     branches: [site-template-database-review]
+    paths-ignore: ['docs/form-field-inventory.json']
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: startupfair-site-template-review
+  cancel-in-progress: false
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install unchanged site dependencies and isolated browser tools
+        run: |
+          npm ci
+          npm install --prefix /tmp/sf-browser --no-audit --no-fund playwright@1.58.2
+          /tmp/sf-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Capture before review
+        run: |
+          bash scripts/codespaces-start.sh
+          node scripts/review-browser.mjs before
+      - name: Apply source-guarded template review
+        run: python3 scripts/apply-template-review.py
+      - name: Verify all email routes and database constraints
+        run: |
+          node --experimental-strip-types --test tests/email-routing.test.mjs
+          python3 database/test_database.py
+      - name: Browser verification after review
+        run: |
+          bash scripts/codespaces-start.sh
+          node scripts/review-browser.mjs after
+      - name: Confirm Home appearance and modal code unchanged
+        run: |
+          cmp review-evidence/before/home-1440.png review-evidence/after/home-1440.png
+          cmp review-evidence/before/home-390.png review-evidence/after/home-390.png
+          git diff --exit-code -- app/globals.css app/home-review.css app/inquiry-fix.css components/ui/dialog.tsx public
+      - name: Commit verified changes to review branch only
+        run: |
+          git add components/startupfair-page.tsx app/layout.tsx app/about-history.css docs/form-field-inventory.json
+          if ! git diff --cached --quiet; then
+            git config user.name 'StartupFair Review'
+            git config user.email 'actions@users.noreply.github.com'
+            git commit -m 'Apply browser-verified public templates and recover approved About content'
+            git push origin HEAD:site-template-database-review
+          fi
       - name: Preserve source snapshot
+        if: always()
         run: git archive --format=zip -o /tmp/startupfair-review-source.zip HEAD
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: startupfair-review-source
-          path: /tmp/startupfair-review-source.zip
+          name: startupfair-review-evidence
+          path: |
+            review-evidence
+            /tmp/startupfair-review-source.zip
           retention-days: 7
