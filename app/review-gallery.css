@@ -1,0 +1,3 @@
+/* Four genuine archive photos: fill the otherwise empty fourth grid cell. */
+@media(min-width:961px){.public-page .about-history-photo:last-child{grid-column:2 / 4}}
+@media(min-width:621px) and (max-width:960px){.public-page .about-history-photo:last-child{grid-column:1 / -1}}
