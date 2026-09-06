@@ -1,0 +1,44 @@
+name: StartupFair site and database review
+on:
+  push:
+    branches: [review/site-template-database]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: startupfair-site-review
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Preserve exact checked-out source for review
+        run: |
+          mkdir -p review-artifacts
+          git archive --format=zip HEAD > review-artifacts/source.zip
+      - name: Install locked site dependencies
+        run: npm ci
+      - name: Install browser audit tools without changing the lockfile
+        run: |
+          npm install --no-save --package-lock=false playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Validate database structure when present
+        run: |
+          if [ -f tests/database-schema.test.mjs ]; then node --test tests/database-schema.test.mjs; fi
+      - name: Start the source site
+        run: bash scripts/codespaces-start.sh
+      - name: Review every public page, route, image, mobile menu and popup
+        run: node scripts/site-audit.mjs
+      - name: Retain review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: startupfair-site-review-${{ github.run_number }}
+          path: review-artifacts/
+          retention-days: 14
