@@ -29,6 +29,6 @@ The existing runtime still has no connected D1/R2 binding. This is not a provisi
 
 Preview notices remain in place. No real personal information was used in testing. `main` and `recovered-baseline` were not changed during this review.
 
-Verification run: https://github.com/pks-alt/startupfair-site/actions/runs/34065737057
+Verification run: https://github.com/pks-alt/startupfair-site/actions/runs/34066399739
 
 Tests ran against the actual repository code in an isolated GitHub Actions browser, not inside the user's authenticated Codespace. To see the committed updates, the existing Codespace must pull the updated preview branch.
