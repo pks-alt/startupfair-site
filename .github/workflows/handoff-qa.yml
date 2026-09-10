@@ -1,0 +1,47 @@
+name: StartupFair Final Handoff QA
+
+on:
+  push:
+    branches: [handoff/startupfair-global-programs-approved]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Build production bundle
+        run: npm run build
+      - name: Run repository tests
+        run: |
+          node --experimental-strip-types --test tests/email-routing.test.mjs
+          node --experimental-strip-types --test tests/rendered-html.test.mjs
+          node --experimental-strip-types --test tests/seo-config.test.mjs
+          node --experimental-strip-types --test tests/ui-components.test.mjs
+          python3 database/test_database.py
+      - name: Install isolated browser
+        run: |
+          npm install --prefix /tmp/sf-handoff-browser --no-audit --no-fund playwright@1.58.2
+          /tmp/sf-handoff-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Start site and run final browser QA
+        run: |
+          bash scripts/codespaces-start.sh
+          node scripts/handoff-qa.mjs
+      - name: Verify protected approved assets are unchanged
+        run: |
+          git diff 304fdec205f4c625a70888243f598288c3b758d0 --exit-code -- \
+            public/startupfair-hero-global-ai.png \
+            public/startupfair-logo.png \
+            public/history \
+            public/telecast-posters \
+            lib/event-telecasts.ts
