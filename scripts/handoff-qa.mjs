@@ -39,7 +39,7 @@ const corePages = [
   ['/about', 'Built on Entrepreneurial Roots'],
   ['/contact', 'Start With the Right Conversation.'],
   ['/launch-challenge', 'Launch an AI or Innovation Challenge'],
-  ['/find-talent', 'Find Proven Talent'],
+  ['/find-talent', 'Find Talent Through Demonstrated Capability'],
   ['/partner-inquiry', 'Partner'],
   ['/privacy', 'Privacy'],
   ['/terms', 'Terms'],
