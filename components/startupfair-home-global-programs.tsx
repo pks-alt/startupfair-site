@@ -155,7 +155,7 @@ function GlobalProgramsSection() {
           <p>For AI and software developers worldwide—including experienced professionals, early-career builders, students and recent graduates. Applicants qualify through evidence of real work and technical thinking before submitting a full profile and résumé.</p>
           <p><strong>Priority deadline:</strong> October 26, 2026<br /><strong>Final deadline:</strong> Friday, October 30, 2026<br /><strong>Kickoff:</strong> Monday, November 2, 2026<br /><strong>Selected cohort:</strong> 30–40 participants</p>
           <p><strong>Potential pathways:</strong> verified skills, finalist/winner recognition, hiring, contract and paid-project introductions where available.</p>
-          <Link className="text-link" href="/challenges">Explore Talent Challenges →</Link>
+          <Link className="text-link" href="/challenges/global-ai-software-talent">View Talent Challenge →</Link>
         </div>
         <div>
           <div className="tags"><span>Applications Opening</span><span>Global Innovator</span><span>7 Days</span></div>
@@ -163,7 +163,7 @@ function GlobalProgramsSection() {
           <p>For individuals, teams, researchers, founders and startups with original AI-enabled or technology-driven ideas across industries. Applications are screened for problem quality, originality, practical potential and ability to execute before full pitch materials are requested.</p>
           <p><strong>Priority deadline:</strong> November 16, 2026<br /><strong>Final deadline:</strong> Friday, November 20, 2026<br /><strong>Kickoff:</strong> Monday, November 23, 2026<br /><strong>Selected cohort:</strong> 15–20 ideas/teams</p>
           <p><strong>Potential pathways:</strong> StartupFair recognition, mentor/industry review, pilot or partnership discussions, and curated accelerator/investor introductions where appropriate.</p>
-          <Link className="text-link" href="/challenges">Explore Innovation Challenges →</Link>
+          <Link className="text-link" href="/challenges/global-innovator">View Innovator Challenge →</Link>
         </div>
       </div>
       <p className="prose process-note"><strong>Schedule notice:</strong> StartupFair may adjust program dates based on qualified application volume, partner requirements or program readiness. Applications may close earlier if capacity is reached.</p>
