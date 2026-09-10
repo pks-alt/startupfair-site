@@ -1,0 +1,64 @@
+/* Final approved StartupFair homepage additions. Scoped to the approved-home root. */
+.approved-home .section{padding-top:44px;padding-bottom:44px}
+.approved-home .section-head{margin-bottom:20px;gap:54px}
+.approved-home .hero{min-height:500px;padding-top:50px;padding-bottom:50px}
+.approved-home .path-grid>a{min-height:210px;padding:28px}
+.approved-home .path-grid h3{margin-top:28px}
+.approved-program-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.approved-program-card{background:#fff;border:1px solid var(--line);border-top:5px solid var(--navy);padding:24px 26px 22px;display:flex;flex-direction:column;min-height:350px;box-shadow:0 12px 28px #102c3d0d}
+.approved-program-card.innovator{border-top-color:var(--blue)}
+.approved-program-top{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
+.approved-program-top .tags{display:flex;gap:6px;flex-wrap:wrap}
+.approved-program-top .tags span{background:#e2f5fe;color:#0a6c9d;font-size:9px;font-weight:900;letter-spacing:.09em;text-transform:uppercase;padding:5px 8px}
+.approved-program-top .tags span+span{background:#e9eff2;color:var(--navy)}
+.approved-date{flex:0 0 72px;min-height:72px;display:grid;place-items:center;text-align:center;background:var(--soft);border:1px solid var(--line);padding:7px}
+.approved-date small{display:block;color:var(--blue-dark);font-size:9px;font-weight:900;letter-spacing:.14em}
+.approved-date strong{display:block;color:var(--navy);font-size:29px;line-height:1}
+.approved-program-card h3{font-size:29px;line-height:1.08;color:var(--navy);margin:20px 0 10px}
+.approved-program-card>p{color:var(--muted);margin:0;font-size:14px;line-height:1.6}
+.approved-program-meta{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);margin-top:18px}
+.approved-program-meta div{padding:11px 12px;border-right:1px solid var(--line)}
+.approved-program-meta div:last-child{border-right:0}
+.approved-program-meta small{display:block;color:#7b8790;font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.approved-program-meta strong{display:block;color:var(--navy);font-size:11px;margin-top:3px;line-height:1.3}
+.approved-program-path{margin-top:13px;padding:11px 13px;background:var(--soft);border-left:4px solid var(--blue);font-size:11px;font-weight:800;color:#52636e}
+.approved-program-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:auto;padding-top:17px}
+.approved-program-footer a{color:var(--blue-dark);font-size:12px;font-weight:900}
+.approved-program-footer span{color:#7b8790;font-size:10px;font-weight:700}
+.approved-schedule-note{margin:11px 0 0;padding:0;border:0;background:transparent;color:#7b8790;font-size:10px;line-height:1.5;max-width:980px}
+.approved-schedule-note strong{color:#52636e}
+.approved-home .process>div{padding:18px 22px;min-height:0}
+.approved-home .process h3{margin:22px 0 8px}
+.approved-why-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.approved-why-grid article{background:#fff;border:1px solid var(--line);border-top:4px solid var(--blue);padding:21px;min-height:180px}
+.approved-why-grid article:nth-child(2){border-top-color:var(--navy)}
+.approved-why-grid article:nth-child(3){border-top-color:#6abf8a}
+.approved-why-grid article:nth-child(4){border-top-color:var(--blue-dark)}
+.approved-why-grid span{color:var(--blue-dark);font-size:9px;font-weight:900;letter-spacing:.12em}
+.approved-why-grid h3{font-size:20px;line-height:1.2;margin:20px 0 7px}
+.approved-why-grid p{color:var(--muted);font-size:12px;margin:0}
+.approved-theme-section{padding:32px max(7vw,32px);background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.approved-theme-heading{display:flex;align-items:end;justify-content:space-between;gap:36px;margin-bottom:16px}
+.approved-theme-heading>div{max-width:620px}
+.approved-theme-heading .eyebrow{margin-bottom:8px}
+.approved-theme-heading h2{font-family:"Aptos Display","Segoe UI Variable Display","Segoe UI",Arial,sans-serif;font-size:clamp(31px,3vw,42px);line-height:1.03;letter-spacing:-.035em;margin:0;color:var(--navy)}
+.approved-theme-heading>p{max-width:500px;margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.approved-theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.approved-theme-grid a{display:flex;align-items:center;min-height:54px;padding:12px 15px;border:1px solid var(--line);background:var(--soft);font-weight:800;line-height:1.25;font-size:13px}
+.approved-theme-grid a:before{content:"";width:7px;height:7px;background:var(--blue);margin-right:10px;flex:0 0 auto}
+.approved-theme-grid a:hover{background:#eef8fc;color:var(--blue-dark);border-color:#c7e7f6}
+.approved-home .partner-strip span{min-height:88px;padding:18px}
+.approved-final-cta{padding-top:48px!important;padding-bottom:48px!important}
+.approved-final-cta .actions{justify-content:center}
+.program-hero{padding-top:62px;padding-bottom:54px}
+.program-hero-card{padding:30px;box-shadow:16px 16px 0 var(--blue)}
+.program-form-hero{padding-top:54px;padding-bottom:50px}
+.program-form-shell{padding-top:44px;padding-bottom:50px}
+.program-feature{min-height:350px;padding:28px}
+.program-process>div{min-height:170px;padding:20px 18px}
+.program-process h3{margin:22px 0 8px}
+.program-timeline>div{min-height:102px;padding:18px}
+.program-notice{margin-top:12px;padding:0;border:0;background:transparent;color:#7b8790;font-size:11px;line-height:1.5}
+.program-notice strong{color:#52636e}
+@media(max-width:960px){.approved-program-grid{grid-template-columns:1fr}.approved-why-grid{grid-template-columns:repeat(2,1fr)}.approved-theme-heading{align-items:flex-start;flex-direction:column;gap:8px}.approved-theme-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.approved-home .hero,.approved-home .section,.approved-theme-section{padding-left:22px;padding-right:22px}.approved-home .hero{padding-top:44px;padding-bottom:48px}.approved-home .hero-art-image{box-shadow:8px 8px 0 var(--blue)}.approved-program-card{padding:21px 20px}.approved-program-meta{grid-template-columns:1fr}.approved-program-meta div{border-right:0;border-bottom:1px solid var(--line)}.approved-program-meta div:last-child{border-bottom:0}.approved-program-footer{align-items:flex-start;flex-direction:column}.approved-why-grid,.approved-theme-grid{grid-template-columns:1fr}.approved-theme-section{padding-top:28px;padding-bottom:28px}}
