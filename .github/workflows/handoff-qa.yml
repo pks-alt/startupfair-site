@@ -31,7 +31,7 @@ jobs:
           node --experimental-strip-types --test tests/email-routing.test.mjs
           node --experimental-strip-types --test tests/rendered-html.test.mjs
           /tmp/sf-handoff-browser/node_modules/.bin/tsx --test tests/seo-config.test.mjs
-          node --experimental-strip-types --test tests/ui-components.test.mjs
+          /tmp/sf-handoff-browser/node_modules/.bin/tsx --test tests/ui-components.test.mjs
           python3 database/test_database.py
       - name: Install Chromium
         run: /tmp/sf-handoff-browser/node_modules/.bin/playwright install --with-deps chromium
