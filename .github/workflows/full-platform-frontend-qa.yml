@@ -19,3 +19,4 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: node scripts/platform-qa.mjs
+# integrated-platform QA trigger after source-check correction
