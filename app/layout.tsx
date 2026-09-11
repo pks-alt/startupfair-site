@@ -9,6 +9,7 @@ import "./review-gallery.css";
 import "./launch-polish.css";
 import "./global-programs.css";
 import "./approved-home.css";
+import "./platform.css";
 
 export const metadata: Metadata = {
   title: "StartupFair | AI Talent & Innovation Challenges",
