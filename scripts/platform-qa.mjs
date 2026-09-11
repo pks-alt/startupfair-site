@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 const routesSource = readFileSync("lib/platform-routes.ts", "utf8");
 const componentSource = readFileSync("components/startupfair-platform.tsx", "utf8");
 const publicRoutesSource = readFileSync("lib/site-routes.ts", "utf8");
+const platformSource = routesSource + "\n" + componentSource;
 
 const platformPaths = [...routesSource.matchAll(/path:\s*"([^"]+)"/g)].map((m) => m[1]);
 const publicPaths = [...publicRoutesSource.matchAll(/"(\/[^"\n]*)"/g)].map((m) => m[1]);
@@ -39,7 +40,7 @@ for (const phrase of [
   "Conflict Declaration",
   "Submit & Lock Score",
   "Security & Audit",
-]) assert.ok(componentSource.includes(phrase), `Missing platform UX phrase: ${phrase}`);
+]) assert.ok(platformSource.includes(phrase), `Missing platform UX phrase: ${phrase}`);
 
 console.log(JSON.stringify({
   publicRoutes: publicPaths.length,
