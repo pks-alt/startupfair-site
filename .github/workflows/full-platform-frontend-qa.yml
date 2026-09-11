@@ -1,9 +1,9 @@
-name: StartupFair Full Platform Frontend QA
+name: StartupFair Final Site + Platform QA
 
 on:
   push:
     branches:
-      - handoff/startupfair-full-platform-integrated
+      - handoff/startupfair-final-site-backend-ready
   workflow_dispatch:
 
 jobs:
@@ -19,4 +19,3 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: node scripts/platform-qa.mjs
-# integrated-platform QA trigger after source-check correction
